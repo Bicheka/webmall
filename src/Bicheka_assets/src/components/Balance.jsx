@@ -22,7 +22,8 @@ function Balance(props) {
         identity,
       },
     });
-    const balance = await authenticatedCanister.balanceOf(props.balanceName);
+    const balances = await authenticatedCanister.balanceOf(identity, props.balanceName);
+    setBalance(balances);
   }
   // const [id, setId] = useState("");
   // const [balanceResult, setBalance] = useState("");

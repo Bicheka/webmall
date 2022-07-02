@@ -12,7 +12,6 @@ e.g. My principal id is:
 ```
 nixvz-oy2nx-gyo47-oyrwa-3bzsl-7sssq-7k6tk-wislm-4zwuf-u3dhq-mae
 
-nixvz-oy2nx-gyo47-oyrwa-3bzsl-7sssq-7k6tk-wislm-4zwuf-u3dhq-mae
 ```
 
 3. Format and store it in a command line variable:

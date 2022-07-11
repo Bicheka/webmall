@@ -13,7 +13,7 @@ import SendIcon from '@mui/icons-material/Send';
 import ChangeCircleOutlinedIcon from '@mui/icons-material/ChangeCircleOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 
-function NavBar(){
+function NavBar(props){
     return (
         <BrowserRouter forceRefresh = {true}>
             <div className="navBar">

@@ -181,8 +181,8 @@ actor Bicheka {
     }
   };
 
-  //gets the if of whoever calls the function
-  public shared query({caller}) func getId() : async Principal{
+  //gets the id of whoever calls the function
+  public query ({caller}) func getId() : async Principal {
     return caller;
   };
 

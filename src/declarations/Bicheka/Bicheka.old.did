@@ -6,7 +6,7 @@ type User =
  };
 service : {
   accountProperties: (principal) -> (User) query;
-  addUser: (principal, nat, nat, vec principal) -> () oneway;
+  addUser: (principal) -> () oneway;
   changeBichekaToUSD: (nat) -> (text);
   changeUSDtoBicheka: (nat) -> (text);
   convertBichekaToUSD: (nat) -> (nat) query;

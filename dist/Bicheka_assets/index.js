@@ -79694,35 +79694,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./src/Bicheka_assets/src/components/App.jsx");
 /* harmony import */ var _declarations_Bicheka_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../declarations/Bicheka/index */ "./src/declarations/Bicheka/index.js");
 /* harmony import */ var _dfinity_auth_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @dfinity/auth-client */ "./node_modules/@dfinity/auth-client/lib/esm/index.js");
+/* provided dependency */ var process = __webpack_require__(/*! ./node_modules/process/browser.js */ "./node_modules/process/browser.js");
 
 
 
 
 
 const init = async () => {
+    const webapp_id = process.env.WHOAMI_CANISTER_ID;
+    // The interface of the whoami canister
+    const webapp_idl = ({ IDL }) => {
+        return IDL.Service({ whoami: IDL.Func([], [IDL.Principal], ["query"]) });
+    };
     const authClient = await _dfinity_auth_client__WEBPACK_IMPORTED_MODULE_4__.AuthClient.create();
     if (await authClient.isAuthenticated()) {
-        handleAuthenticated(authClient);
+        handleAuthenticated(authClient, webapp_id, webapp_idl);
     }
     else {
         await authClient.login({
             identityProvider: 'https://identity.ic0.app/#authorize',
             onSuccess: () => {
-                handleAuthenticated(authClient);
+                handleAuthenticated(authClient, webapp_id, webapp_idl);
             }
         });
     }
 };
-async function handleAuthenticated(authClient) {
-    const root = react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot(document.getElementById("root"));
-    const identity = authClient.getIdentity();
-    const agent = new HttpAgent({ identity });
-    const webapp = Actor.createActor(webapp_idl, {
-        agent,
-        canisterId: webapp_id,
+async function handleAuthenticated(authClient, webapp_id, webapp_idl) {
+    const identity = await authClient.getIdentity();
+    const authenticatedCanister = (0,_declarations_Bicheka_index__WEBPACK_IMPORTED_MODULE_3__.createActor)(_declarations_Bicheka_index__WEBPACK_IMPORTED_MODULE_3__.canisterId, {
+        agentOptions: {
+            identity,
+        },
     });
-    const principal = await webapp.whoami();
-    _declarations_Bicheka_index__WEBPACK_IMPORTED_MODULE_3__.Bicheka.addUser(principal, 0, 0);
+    console.log("webapp = " + authenticatedCanister);
+    // Call whoami which returns the principal (user id) of the current user.
+    const principal = await authenticatedCanister.getId();
+    console.log(principal.toText());
+    const root = react_dom_client__WEBPACK_IMPORTED_MODULE_0__.createRoot(document.getElementById("root"));
     root.render(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_App__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 }
 init();

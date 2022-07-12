@@ -1,0 +1,10 @@
+service : {
+  balanceOf: (principal, text) -> (nat) query;
+  changeBichekaToUSD: (nat) -> (text);
+  changeUSDtoBicheka: (nat) -> (text);
+  convertBichekaToUSD: (nat) -> (nat) query;
+  convertUSDtoBcicheka: (nat) -> (nat) query;
+  getId: () -> (principal) query;
+  showSymbol: () -> (text) query;
+  transfer: (principal, nat) -> (text);
+}

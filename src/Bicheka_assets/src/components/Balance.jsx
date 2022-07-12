@@ -1,48 +1,35 @@
 import React, {useDebugValue, useState} from "react";
 import {Principal} from '@dfinity/principal';
-import { Bicheka, canisterId, createActor } from "../../../declarations/Bicheka/index";
-import { AuthClient } from '@dfinity/auth-client';
+import { Bicheka} from "../../../declarations/Bicheka/index";
 
 function Balance(props) {
   
   const [balance, setBalance] = useState(0);
  
   async function handleChange(){
-    const id = await Bicheka.getId()
-    const value = await Bicheka.balanceOf(Principal.fromText(id), props.balanceName);
+    const id = await Bicheka.getId();
+    console.log(String(id));
+    const value = await Bicheka.balanceOf(Principal.fromText("nixvz-oy2nx-gyo47-oyrwa-3bzsl-7sssq-7k6tk-wislm-4zwuf-u3dhq-mae"), props.balanceName);
+    console.log(value);
     setBalance(value);
+    console.log("your balance is "+ balance);
+    
+    
   }
 
   async function handleClick(event){
   
-    const authClient = await AuthClient.create();
-    const identity = await authClient.getIdentity();
-    const authenticatedCanister = createActor(canisterId, {
-      agentOptions: {
-        identity,
-      },
-    });
-    const balances = await authenticatedCanister.balanceOf(identity, props.balanceName);
-    setBalance(balances);
+    // const authClient = await AuthClient.create();
+    // const identity = await authClient.getIdentity();
+    // const authenticatedCanister = createActor(canisterId, {
+    //   agentOptions: {
+    //     identity,
+    //   },
+    // });
+    // const balances = await authenticatedCanister.balanceOf(identity, props.balanceName);
+    // setBalance(balances);
   }
-  // const [id, setId] = useState("");
-  // const [balanceResult, setBalance] = useState("");
-  // const [cryptoSymbol, setSymbol] = useState("");
-  // const [isHidden, setHidden] = useState(true);
-
-  // function handleChange(event){
-  //   const value = event.target.value;
-  //   setId(value);
-  // }
-
-  // async function handleClick() {
-  //   console.log(id);
-  //   const principal = Principal.fromText(id); //convert the id into principal data type
-  //   const balance = await Bicheka.balanceOf(principal);
-  //   setBalance(balance.toLocaleString());
-  //   setSymbol(await Bicheka.showSymbol());
-  //   setHidden(false);
-  // }
+  
 
   return (
     
@@ -50,9 +37,8 @@ function Balance(props) {
         <img className="currencyLogo" src={props.logo} alt="usdLogo"/>
         <h5 className="currencyName ">{props.currencyName}</h5>
         <h6 className="rightElement"
-        onLoad={handleChange}
+        onClick={handleChange}
         >${balance}</h6>
-        <button className = "myButton" onClick={handleClick}><h5>Click me</h5></button>
     </div>
 
   );

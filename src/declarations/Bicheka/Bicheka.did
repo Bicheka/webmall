@@ -1,10 +1,18 @@
+type User = 
+ record {
+   bichekaBalance: nat;
+   id: principal;
+   usdBalance: nat;
+ };
 service : {
-  balanceOf: (principal, text) -> (nat) query;
+  accountProperties: (principal) -> (User) query;
+  addUser: (principal) -> () oneway;
   changeBichekaToUSD: (nat) -> (text);
   changeUSDtoBicheka: (nat) -> (text);
   convertBichekaToUSD: (nat) -> (nat) query;
   convertUSDtoBcicheka: (nat) -> (nat) query;
-  getId: () -> (text) query;
+  getBalance: (principal, text) -> (nat) query;
+  getId: () -> (principal) query;
   showSymbol: () -> (text) query;
   transfer: (principal, nat) -> (text);
 }

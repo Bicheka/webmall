@@ -1,4 +1,6 @@
-# About me
+# About
 
-My name is David Martinez.
-I am a Computer Science student.
+# Bicheka
+
+This is an online mall where people and business can add their stores
+and sell their products.

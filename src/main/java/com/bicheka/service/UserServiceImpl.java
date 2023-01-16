@@ -7,23 +7,24 @@ import org.springframework.stereotype.Service;
 
 import com.bicheka.POJO.User;
 import com.bicheka.exeption.EntityNotFoundException;
+import com.bicheka.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private com.bicheka.repository.UserRepository userRepository;
+    private UserRepository userRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    public User getUser(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        return unwrapUser(user, 404L);
-    }
+    // @Override
+    // public User getUser(String id) {
+    //     Optional<User> user = userRepository.findById(id);
+    //     return unwrapUser(user, null);
+    // }
 
     @Override
-    public User getUser(String username) {
+    public User getUserByName(String username) {
         Optional<User> user = userRepository.findByUsername(username);
         return unwrapUser(user, null);
     }

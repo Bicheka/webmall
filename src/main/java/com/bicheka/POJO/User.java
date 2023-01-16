@@ -1,6 +1,7 @@
 package com.bicheka.POJO;
 
 
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,15 +12,16 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@Document("users")
+
 @Getter
 @Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
+@Document("user")
 public class User {
 
     @Id
-	private Long id;
+	private String id;
 
 	@NotBlank(message =  "username cannot be blank")
 	@NonNull

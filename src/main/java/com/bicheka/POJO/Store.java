@@ -1,6 +1,7 @@
 package com.bicheka.POJO;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.mongodb.lang.NonNull;
@@ -12,15 +13,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Document("store")
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class Store {
-
     @Id
-    private String id;
+    private Long id;
 
+    @Indexed(unique = true)
     @NotBlank(message =  "name cannot be blank")
     @NonNull
     private String storename;

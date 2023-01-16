@@ -1,6 +1,7 @@
 package com.bicheka.controller;
 
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,10 @@ public class UserController {
 
     UserService userService;
 
-	@GetMapping("/{id}")
-	public ResponseEntity<String> findById(@PathVariable Long id) {
+	@GetMapping("/{username}")
+	public ResponseEntity<String> findByName(@PathVariable String username) {
 		
-		return new ResponseEntity<>(userService.getUser(id).getUsername(), HttpStatus.OK);
+		return new ResponseEntity<>(userService.getUserByName(username).getUsername(), HttpStatus.OK);
 	}
 
     @PostMapping("/register")

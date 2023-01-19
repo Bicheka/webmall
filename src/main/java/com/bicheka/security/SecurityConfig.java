@@ -19,6 +19,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @AllArgsConstructor
 public class SecurityConfig {
 
+    // @Autowired
+    // private UserDetailsService userDetailsService;
+
     private CustomAuthenticationManager customAuthenticationManager;
 
     @Bean
@@ -29,10 +32,9 @@ public class SecurityConfig {
     
             .csrf().disable()
             .authorizeHttpRequests()
-            .requestMatchers(HttpMethod.POST, "/create_store").permitAll()
-            .requestMatchers(HttpMethod.GET, SecurityConstants.GET_STORES).permitAll()
-            .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll() //permit all request at this path
-            .anyRequest().authenticated()
+                .requestMatchers(HttpMethod.GET, SecurityConstants.GET_STORES).permitAll()
+                .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll() //permit all request at this path
+                .anyRequest().authenticated()
             .and()
             .addFilterBefore(new com.bicheka.security.filter.ExceptionHandlerFilter(), AuthenticationFilter.class)
             .addFilter(authenticationFilter) //calls the authentication filter class that maps the reaquest into a user object
@@ -41,6 +43,10 @@ public class SecurityConfig {
         return http.build();
     }
 
+    // @Bean
+    // public UserDetailsService userDetailsService() {
+    //     return super.userDetailsService();
+    // }
 
     
 }

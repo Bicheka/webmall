@@ -30,9 +30,9 @@ public class StoreController {
         return  storeService.createStore(store);
     }
 
-    @GetMapping("/get_store/{id}")
-    public Store getStore(@PathVariable Long id){
-        return storeService.getStore(id);
+    @GetMapping("/get_store/{storename}")
+    public Store getStore(@PathVariable String storename){
+        return storeService.getStoreByName(storename);
     }
 
     @GetMapping("/get_all_stores")
@@ -40,14 +40,14 @@ public class StoreController {
         return storeService.getAllStores();
     }
 
-    @DeleteMapping("/delete_store/{id}")
-    public void deleteStore(@PathVariable Long id){
-        storeService.deleteStore(id);
+    @DeleteMapping("/delete_store/{storename}")
+    public void deleteStore(@PathVariable String storename){
+        storeService.deleteStore(storename);
     }
 
-    @PutMapping("/rename_store/{id}")
-    public Store putMethodName(@PathVariable Long id, @RequestBody String newName) {
-        return storeService.renameStore(id, newName);
+    @PutMapping("/rename_store/{storename}")
+    public Store putMethodName(@PathVariable String storename, @RequestBody String newName) {
+        return storeService.renameStore(storename, newName);
     }
     
 }

@@ -1,12 +1,11 @@
 package com.bicheka.service;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bicheka.POJO.Store;
-import com.bicheka.exeption.EntityNotFoundException;
 import com.bicheka.repository.StoreRepository;
 
 import lombok.AllArgsConstructor;
@@ -16,38 +15,36 @@ import lombok.AllArgsConstructor;
 public class StoreServiceImpl implements StoreService{
 
     private StoreRepository storeRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @Override
     public Store createStore(Store store) {
+        store.setPassword(bCryptPasswordEncoder.encode(store.getPassword()));
         return storeRepository.save(store);
     }
 
     @Override
-    public void deleteStore(Long id) {
+    public void deleteStore(String id) {
         storeRepository.deleteById(id);  
     }
 
     @Override
-    public Store getStore(Long id) {
-        Optional<Store> store = storeRepository.findById(id);
-        return unwrapStore(store, 404L);
-    }
-
-    static Store unwrapStore(Optional<Store> entity, Long id) {
-        if (entity.isPresent()) return entity.get();
-        else throw new EntityNotFoundException(id, Store.class);
+    public Store getStoreByName(String name) {
+        return storeRepository.findStoreByName(name);
     }
 
     @Override
     public List<Store> getAllStores() {
-        List<Store> stores = storeRepository.findAll();
+        List<Store> stores = storeRepository.findAll(); 
         return  stores;
     }
 
     @Override
-    public Store renameStore(Long id, String newName) {
-        Store store = getStore(id);
-        store.setStorename(newName);
+    public Store renameStore(String storename, String newName) {
+        Store store = getStoreByName(storename);
+        store.setStoreName(newName);
         return store;
     }
+
 }

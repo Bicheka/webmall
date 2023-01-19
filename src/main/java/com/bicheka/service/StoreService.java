@@ -7,11 +7,11 @@ import com.bicheka.POJO.Store;
 public interface StoreService {
     public Store createStore(Store store);
 
-    public Store getStore(Long id);
+    public Store getStoreByName(String name);
 
     public List<Store> getAllStores();
 
-    public void deleteStore(Long id);
+    public void deleteStore(String storename);
 
-    public Store renameStore(Long id, String newName);
+    public Store renameStore(String storename, String newName);
 }

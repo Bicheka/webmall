@@ -2,8 +2,12 @@ package com.bicheka.controller;
 
 
 
+import java.security.Principal;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +30,32 @@ public class UserController {
     UserService userService;
 
 	@GetMapping("/{username}")
-	public ResponseEntity<String> findByName(@PathVariable String username) {
+	public ResponseEntity<User> findByName(@PathVariable String username) {
+		return new ResponseEntity<>(userService.getUserByName(username), HttpStatus.OK);
+	}
+
+	@GetMapping("/get_user_details/{username}")
+	public ResponseEntity<UserDetails> getUserDetails(@PathVariable String username) {
+		return new ResponseEntity<>(userService.getUserDetailsByName(username), HttpStatus.OK);
+	}
+
+	@GetMapping("/getByEmail/{email}")
+	public ResponseEntity<User> findByEmail(@PathVariable String email){
+		return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
+	}
 		
-		return new ResponseEntity<>(userService.getUserByName(username).getUsername(), HttpStatus.OK);
+
+	@DeleteMapping("/delete_account")
+	public ResponseEntity<Void> deleteByEmail(Principal principal) {
+
+		String name = principal.getName();
+  		
+
+		System.out.println(name);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+            // .status(HttpStatus.OK)
+            // .body("Account with email: "+ user.getEmail() + " was deleted");
 	}
 
     @PostMapping("/register")

@@ -2,6 +2,7 @@ package com.bicheka.service;
 
 import java.util.Optional;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+    // private ApplicationConfig applicationConfig;
 
     // @Override
     // public User getUser(String id) {
@@ -30,10 +32,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        
         return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteAccount(){
+        
+     
+    }
+
+    @Override
+    public UserDetails getUserDetailsByName(String username){
+        return userRepository.findByUsername(username)
+            .orElseThrow(() -> new EntityNotFoundException());
     }
 
     static User unwrapUser(Optional<User> entity, Long id) {
@@ -41,4 +59,5 @@ public class UserServiceImpl implements UserService {
         else throw new EntityNotFoundException(id, User.class);
     }
     
+
 }

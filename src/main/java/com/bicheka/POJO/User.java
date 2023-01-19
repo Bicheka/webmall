@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,8 +30,9 @@ public class User implements UserDetails{
 
 	@NotBlank(message =  "username cannot be blank")
 	@NonNull
-	private String username;
+	private String firstName;
 
+	@Indexed(unique = true)
 	@NotBlank(message =  "email cannot be blank")
 	@NonNull
 	private String email;
@@ -53,7 +55,7 @@ public class User implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		return username;
+		return email;
 	}
 
 	@Override

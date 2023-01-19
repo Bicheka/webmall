@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/store")
-public class StoreController {
+public class StoreController{
     
     private StoreService storeService;
 

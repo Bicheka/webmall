@@ -43,9 +43,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteAccount(){
-        
-     
+    public void deleteAccount(String email){
+        userRepository.deleteByEmail(email);
     }
 
     @Override

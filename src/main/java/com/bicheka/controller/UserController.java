@@ -44,18 +44,12 @@ public class UserController {
 		return new ResponseEntity<>(userService.getUserByEmail(email), HttpStatus.OK);
 	}
 		
-
 	@DeleteMapping("/delete_account")
-	public ResponseEntity<Void> deleteByEmail(Principal principal) {
+	public ResponseEntity<String> deleteByEmail(Principal principal) {
 
-		String name = principal.getName();
-  		
-
-		System.out.println(name);
-
-		return new ResponseEntity<>(HttpStatus.OK);
-            // .status(HttpStatus.OK)
-            // .body("Account with email: "+ user.getEmail() + " was deleted");
+		String email = principal.getName(); //it says getName but what is actually getting is the email of the current authenticated user
+		userService.deleteAccount(email);
+		return new ResponseEntity<>("Account deleted",HttpStatus.OK);
 	}
 
     @PostMapping("/register")

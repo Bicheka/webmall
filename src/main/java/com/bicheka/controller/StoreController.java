@@ -1,7 +1,10 @@
 package com.bicheka.controller;
 
+import java.security.Principal;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +29,8 @@ public class StoreController{
     private StoreService storeService;
 
     @PostMapping("/create_store")
-    public Store createStore(@RequestBody Store store) {
-        return  storeService.createStore(store);
+    public ResponseEntity<Store> createStore(@RequestBody Store store, Principal principal) {
+        return  new ResponseEntity<Store>(storeService.createStore(store, principal.getName()), HttpStatus.CREATED);
     }
 
     @GetMapping("/get_store/{storename}")

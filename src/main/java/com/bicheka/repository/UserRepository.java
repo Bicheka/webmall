@@ -9,8 +9,7 @@ import com.bicheka.POJO.User;
 public interface UserRepository extends MongoRepository<User, String> {
 	Optional<User> findByUsername(String username);
 
-	@Query("{'email' : ?0}")
-    User findByEmail(String email);
+	Optional<User> findByEmail(String email);
 
 	@Query(value = "{'email' : ?0}", delete = true)
     User deleteByEmail(String email);

@@ -17,13 +17,6 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-    // private ApplicationConfig applicationConfig;
-
-    // @Override
-    // public User getUser(String id) {
-    //     Optional<User> user = userRepository.findById(id);
-    //     return unwrapUser(user, null);
-    // }
 
     @Override
     public User getUserByName(String username) {
@@ -33,17 +26,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email){
-        return userRepository.findByEmail(email);
+        email = email.toLowerCase();
+
+        Optional<User> user = userRepository.findByEmail(email);
+        return unwrapUser(user, email);
     }
 
     @Override
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setEmail(user.getEmail().toLowerCase()); // email to lower case
         return userRepository.save(user);
     }
 
     @Override
     public void deleteAccount(String email){
+        
         userRepository.deleteByEmail(email);
     }
 
@@ -53,10 +51,14 @@ public class UserServiceImpl implements UserService {
             .orElseThrow(() -> new EntityNotFoundException());
     }
 
-    static User unwrapUser(Optional<User> entity, Long id) {
+    static User unwrapUser(Optional<User> entity) {
+        if (entity.isPresent()) return entity.get();
+        else throw new EntityNotFoundException();
+    }
+
+    static User unwrapUser(Optional<User> entity, String id) {
         if (entity.isPresent()) return entity.get();
         else throw new EntityNotFoundException(id, User.class);
     }
     
-
 }

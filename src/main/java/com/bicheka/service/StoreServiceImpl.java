@@ -2,10 +2,13 @@ package com.bicheka.service;
 
 import java.util.List;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.bicheka.POJO.Store;
+import com.bicheka.POJO.User;
 import com.bicheka.repository.StoreRepository;
 
 import lombok.AllArgsConstructor;
@@ -15,13 +18,21 @@ import lombok.AllArgsConstructor;
 public class StoreServiceImpl implements StoreService{
 
     private StoreRepository storeRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private MongoTemplate mongoTemplate;
 
     @Override
-    public Store createStore(Store store) {
-        store.setPassword(bCryptPasswordEncoder.encode(store.getPassword()));
-        return storeRepository.save(store);
+    public Store createStore(Store store, String email) {
+        //Store store = new Store();
+        storeRepository.insert(store);
+
+        //update the user with id -> "userId" and push a store into its property "storeIds"
+        mongoTemplate.update(User.class)
+            .matching(Criteria.where("email").is(email))
+            .apply(new Update().push("storeIds").value(store))
+            .first(); //first() makes sure to get only one user, the first one to find
+        
+        return store;
     }
 
     @Override

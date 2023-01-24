@@ -1,6 +1,7 @@
 package com.bicheka.POJO;
 
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -13,8 +14,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Store extends User{
+public class Store{
     
+    @Id
+    private String id;
+
     private String storeName;
 
 }

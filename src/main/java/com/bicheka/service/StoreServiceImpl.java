@@ -7,9 +7,11 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.bicheka.POJO.Role;
 import com.bicheka.POJO.Store;
 import com.bicheka.POJO.User;
 import com.bicheka.repository.StoreRepository;
+
 
 import lombok.AllArgsConstructor;
 
@@ -20,6 +22,7 @@ public class StoreServiceImpl implements StoreService{
     private StoreRepository storeRepository;
 
     private MongoTemplate mongoTemplate;
+    
 
     @Override
     public Store createStore(Store store, String email) {
@@ -27,6 +30,12 @@ public class StoreServiceImpl implements StoreService{
         store.setUserEmail(email);
         storeRepository.insert(store);
 
+        //THIS NEEDS TO BE MODIFIED SO IT DOES NOT UPDATE THE USER TO STORE EVRY TIME A STORE IS CREATED, WE JUST NEED IT ONCE
+        mongoTemplate.update(User.class)
+            .matching(Criteria.where("email").is(email))
+            .apply(new Update().set("role", Role.STORE))
+            .first();
+        
         //update the user with id -> "userId" and push a store into its property "storeIds"
         mongoTemplate.update(User.class)
             .matching(Criteria.where("email").is(email))

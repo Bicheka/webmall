@@ -62,6 +62,11 @@ public class UserServiceImpl implements UserService {
             .orElseThrow(() -> new EntityNotFoundException());
     }
 
+    @Override
+    public void updateRole(String email) {
+        
+    }
+
     static User unwrapUser(Optional<User> entity) {
         if (entity.isPresent()) return entity.get();
         else throw new EntityNotFoundException();

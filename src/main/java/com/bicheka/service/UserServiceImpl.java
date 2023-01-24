@@ -2,10 +2,14 @@ package com.bicheka.service;
 
 import java.util.Optional;
 
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.bicheka.POJO.Store;
 import com.bicheka.POJO.User;
 import com.bicheka.exeption.EntityNotFoundException;
 import com.bicheka.repository.UserRepository;
@@ -17,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private MongoTemplate mongoTemplate;
 
     @Override
     public User getUserByName(String username) {
@@ -41,7 +46,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteAccount(String email){
-        
+
+        email = email.toLowerCase();
+
+        Query query = Query.query(Criteria.where("userEmail").is(email));
+
+        mongoTemplate.remove( query, Store.class);
+
         userRepository.deleteByEmail(email);
     }
 

@@ -21,4 +21,6 @@ public class Store{
 
     private String storeName;
 
+    String userEmail;
+
 }

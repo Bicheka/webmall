@@ -13,5 +13,7 @@ public interface StoreService {
 
     public void deleteStore(String storename);
 
+    public void deleteUserStores(String email);
+
     public Store renameStore(String storename, String newName);
 }

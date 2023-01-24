@@ -29,8 +29,9 @@ public class StoreController{
     private StoreService storeService;
 
     @PostMapping("/create_store")
-    public ResponseEntity<Store> createStore(@RequestBody Store store, Principal principal) {
-        return  new ResponseEntity<Store>(storeService.createStore(store, principal.getName()), HttpStatus.CREATED);
+    public ResponseEntity<Store> createStore(Principal principal, @RequestBody Store store) {
+        String email = principal.getName();
+        return  new ResponseEntity<Store>(storeService.createStore(store, email), HttpStatus.CREATED);
     }
 
     @GetMapping("/get_store/{storename}")

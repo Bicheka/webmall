@@ -23,13 +23,14 @@ public class StoreServiceImpl implements StoreService{
 
     @Override
     public Store createStore(Store store, String email) {
-        //Store store = new Store();
+
+        store.setUserEmail(email);
         storeRepository.insert(store);
 
         //update the user with id -> "userId" and push a store into its property "storeIds"
         mongoTemplate.update(User.class)
             .matching(Criteria.where("email").is(email))
-            .apply(new Update().push("storeIds").value(store))
+            .apply(new Update().push("storeIds", store))
             .first(); //first() makes sure to get only one user, the first one to find
         
         return store;
@@ -38,6 +39,11 @@ public class StoreServiceImpl implements StoreService{
     @Override
     public void deleteStore(String id) {
         storeRepository.deleteById(id);  
+    }
+
+    @Override
+    public void deleteUserStores(String email) {
+        
     }
 
     @Override

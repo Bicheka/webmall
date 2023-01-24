@@ -2,5 +2,4 @@
 
 # Bicheka
 
-This is an online mall where people and business can add their stores
-and sell their products.
+This is an online mall where people can buy products. Also everyone can add as many stores as they want.

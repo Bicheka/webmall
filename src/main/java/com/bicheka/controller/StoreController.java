@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,29 +30,28 @@ public class StoreController{
     private StoreService storeService;
 
     @PostMapping("/create_store")
-    public ResponseEntity<Store> createStore(Principal principal, @RequestBody Store store) {
-        String email = principal.getName();
-        return  new ResponseEntity<Store>(storeService.createStore(store, email), HttpStatus.CREATED);
+    public ResponseEntity<Store> createStore(@RequestBody Store store, Principal principal) {
+        return  new ResponseEntity<Store>(storeService.createStore(store, principal), HttpStatus.CREATED);
     }
 
     @GetMapping("/get_store/{storename}")
-    public Store getStore(@PathVariable String storename){
-        return storeService.getStoreByName(storename);
+    public ResponseEntity<Store> getStore(@PathVariable String storename){
+        return new ResponseEntity<>(storeService.getStoreByName(storename), HttpStatus.OK);
     }
 
     @GetMapping("/get_all_stores")
-    public List<Store> getAlStores(){
-        return storeService.getAllStores();
+    public ResponseEntity<List<Store>> getAlStores(){
+        return new ResponseEntity<>(storeService.getAllStores(), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete_store/{storename}")
-    public void deleteStore(@PathVariable String storename){
-        storeService.deleteStore(storename);
+    public ResponseEntity<Void> deleteStore(@PathVariable String storename){
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/rename_store/{storename}")
-    public Store putMethodName(@PathVariable String storename, @RequestBody String newName) {
-        return storeService.renameStore(storename, newName);
+    public ResponseEntity<Store> renameStore(@PathVariable String storename, @RequestBody String newName) {
+        return new ResponseEntity<>(storeService.renameStore(storename, newName), HttpStatus.OK);
     }
     
 }

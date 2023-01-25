@@ -1,5 +1,6 @@
 package com.bicheka.service;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -22,19 +23,20 @@ public class StoreServiceImpl implements StoreService{
     private StoreRepository storeRepository;
 
     private MongoTemplate mongoTemplate;
-    
+    private UserService userService;
 
     @Override
-    public Store createStore(Store store, String email) {
+    public Store createStore(Store store, Principal principal) {
 
+        String email = principal.getName();
+
+        //if the role of the user is not STORE change it to the role of STORE
+        if(Role.STORE != userService.getUserByEmail(email).getRole()){
+            userService.updateRole(email);
+        }
+        
         store.setUserEmail(email);
         storeRepository.insert(store);
-
-        //THIS NEEDS TO BE MODIFIED SO IT DOES NOT UPDATE THE USER TO STORE EVRY TIME A STORE IS CREATED, WE JUST NEED IT ONCE
-        mongoTemplate.update(User.class)
-            .matching(Criteria.where("email").is(email))
-            .apply(new Update().set("role", Role.STORE))
-            .first();
         
         //update the user with id -> "userId" and push a store into its property "storeIds"
         mongoTemplate.update(User.class)

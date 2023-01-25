@@ -5,10 +5,12 @@ import java.util.Optional;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.bicheka.POJO.Role;
 import com.bicheka.POJO.Store;
 import com.bicheka.POJO.User;
 import com.bicheka.exeption.EntityNotFoundException;
@@ -37,6 +39,12 @@ public class UserServiceImpl implements UserService {
         return unwrapUser(user, email);
     }
 
+    // @Override
+    // public Authentication getUserAuthentication() {
+    //     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    //     return authentication;
+    // }
+
     @Override
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -48,12 +56,9 @@ public class UserServiceImpl implements UserService {
     public void deleteAccount(String email){
 
         email = email.toLowerCase();
-
         Query query = Query.query(Criteria.where("userEmail").is(email));
-
-        mongoTemplate.remove( query, Store.class);
-
-        userRepository.deleteByEmail(email);
+        mongoTemplate.remove( query, Store.class); //delete asociated stores
+        userRepository.deleteByEmail(email);//delete user
     }
 
     @Override
@@ -64,8 +69,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateRole(String email) {
-        
+        mongoTemplate.update(User.class)
+            .matching(Criteria.where("email").is(email))
+            .apply(new Update().set("role", Role.STORE))
+            .first();
     }
+
+
 
     static User unwrapUser(Optional<User> entity) {
         if (entity.isPresent()) return entity.get();

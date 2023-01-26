@@ -2,6 +2,7 @@ package com.bicheka.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.bicheka.POJO.Role;
 import com.bicheka.POJO.User;
 
 public interface UserService {
@@ -12,5 +13,5 @@ public interface UserService {
     User getUserByEmail(String email);
     User saveUser(User user);
     void deleteAccount(String email);
-    void updateRole(String email);
+    void updateRole(String email, Role role);
 }

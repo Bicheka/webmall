@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class StoreServiceImpl implements StoreService{
 
         //if the role of the user is not STORE change it to the role of STORE
         if(Role.STORE != userService.getUserByEmail(email).getRole()){
-            userService.updateRole(email);
+            userService.updateRole(email, Role.STORE);
         }
         
         store.setUserEmail(email);
@@ -48,8 +49,34 @@ public class StoreServiceImpl implements StoreService{
     }
 
     @Override
+    public List<Store> getUserStores(String email) {
+        Query query = Query.query(Criteria.where("userEmail").is(email));
+        return mongoTemplate.find(query, Store.class);
+    }
+
+    @Override
     public void deleteStore(String id) {
         storeRepository.deleteById(id);  
+    }
+
+    @Override
+    public void deleteStoreById(String id) {
+        Query storeQuery = Query.query(Criteria.where("id").is(id));
+        Store store = mongoTemplate.findOne(storeQuery, Store.class);
+        
+        String email = store.getUserEmail();
+        
+        //delete asociated stores
+        mongoTemplate.remove( storeQuery, Store.class);
+
+        //delete user list of stores
+        Query userQuery = Query.query(Criteria.where("email").is(email));
+        User user = mongoTemplate.findOne(userQuery, User.class);
+        mongoTemplate.save(user);//by saving the user it gets updated
+
+        if(userService.getUserByEmail(email).getStoreIds().size() == 0){
+            userService.updateRole(email, Role.USER);
+        }
     }
 
     @Override

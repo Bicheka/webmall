@@ -10,9 +10,13 @@ public interface StoreService {
 
     public Store getStoreByName(String name);
 
+    public List<Store> getUserStores(String email);
+
     public List<Store> getAllStores();
 
     public void deleteStore(String storename);
+
+    public void deleteStoreById(String id);
 
     public void deleteUserStores(String email);
 

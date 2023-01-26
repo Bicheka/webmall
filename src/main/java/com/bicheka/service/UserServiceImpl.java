@@ -68,10 +68,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateRole(String email) {
+    public void updateRole(String email, Role role) {
         mongoTemplate.update(User.class)
             .matching(Criteria.where("email").is(email))
-            .apply(new Update().set("role", Role.STORE))
+            .apply(new Update().set("role", role))
             .first();
     }
 

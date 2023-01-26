@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,9 +43,15 @@ public class StoreController{
         return new ResponseEntity<>(storeService.getAllStores(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete_store/{storename}")
-    public ResponseEntity<Void> deleteStore(@PathVariable String storename){
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping("/get_user_stores")
+    public ResponseEntity<List<Store>> getUserStores(Principal principal){
+        return new ResponseEntity<>(storeService.getUserStores(principal.getName()), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete_store/{id}")
+    public ResponseEntity<String> deleteStoreById(@PathVariable String id){
+        storeService.deleteStoreById(id);
+        return new ResponseEntity<>("Store Deleted", HttpStatus.OK);
     }
 
     @PutMapping("/rename_store/{storename}")

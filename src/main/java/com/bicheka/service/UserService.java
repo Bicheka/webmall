@@ -8,7 +8,6 @@ import com.bicheka.POJO.User;
 public interface UserService {
     // User getUser(Long id);
     User getUserByName(String username);
-    // Authentication getUserAuthentication();
     UserDetails getUserDetailsByName(String username);
     User getUserByEmail(String email);
     User saveUser(User user);

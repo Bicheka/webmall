@@ -39,12 +39,6 @@ public class UserServiceImpl implements UserService {
         return unwrapUser(user, email);
     }
 
-    // @Override
-    // public Authentication getUserAuthentication() {
-    //     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    //     return authentication;
-    // }
-
     @Override
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -54,7 +48,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteAccount(String email){
-
         email = email.toLowerCase();
         Query query = Query.query(Criteria.where("userEmail").is(email));
         mongoTemplate.remove( query, Store.class); //delete asociated stores

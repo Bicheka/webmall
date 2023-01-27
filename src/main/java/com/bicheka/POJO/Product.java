@@ -1,12 +1,7 @@
 package com.bicheka.POJO;
-
-
-import java.util.List;
-
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.aggregation.DateOperators.DateAdd;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -16,25 +11,37 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Document("store")
-@NoArgsConstructor
-@AllArgsConstructor
+@Document
 @Getter
 @Setter
-public class Store{
-    
+@AllArgsConstructor
+@NoArgsConstructor
+public class Product {
+
     @Id
     private String id;
 
-    @Indexed(unique = true)
-    @NotBlank(message = "The name of the store cannot be blank")
+    @NotBlank
     @NotEmpty
     @NotNull
-    private String storeName;
+    private String name;
 
-    @DocumentReference
-    private List<Product> products;
+    @NotBlank
+    @NotEmpty
+    @NotNull
+    private double price;
+    
+    @NotBlank
+    @NotEmpty
+    @NotNull
+    private Category category;
 
-    String userEmail;
+    private String description;
 
+    private DateAdd dateAdd;
+
+    @NotBlank
+    @NotEmpty
+    @NotNull
+    private String storeId;
 }

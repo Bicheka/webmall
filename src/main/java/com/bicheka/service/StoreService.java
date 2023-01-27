@@ -6,19 +6,12 @@ import java.util.List;
 import com.bicheka.POJO.Store;
 
 public interface StoreService {
-    public Store createStore(Store store, Principal principal);
-
-    public Store getStoreByName(String name);
-
-    public List<Store> getUserStores(String email);
-
-    public List<Store> getAllStores();
-
-    public void deleteStore(String storename);
-
-    public void deleteStoreById(String id);
-
-    public void deleteUserStores(String email);
-
-    public Store renameStore(String storename, String newName);
+    Store createStore(Store store, Principal principal);
+    Store getStoreByName(String name);
+    List<Store> getUserStores(String email);
+    List<Store> getAllStores();
+    void deleteStore(String storename);
+    void deleteStoreById(String id);
+    void deleteUserStores(String email);
+    Store renameStore(String storename, String newName);
 }

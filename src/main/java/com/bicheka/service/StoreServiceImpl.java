@@ -69,10 +69,12 @@ public class StoreServiceImpl implements StoreService{
         //delete asociated stores
         mongoTemplate.remove( storeQuery, Store.class);
 
-        //delete user list of stores
+        //update user 
+        // TODO: Needs optimization adding a Document reference on the entity to its parent to save this query
         Query userQuery = Query.query(Criteria.where("email").is(email));
         User user = mongoTemplate.findOne(userQuery, User.class);
-        mongoTemplate.save(user);//by saving the user it gets updated
+        //by saving the user it gets updated
+        mongoTemplate.save(user);
 
         if(userService.getUserByEmail(email).getStoreIds().size() == 0){
             userService.updateRole(email, Role.USER);

@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService{
         // TODO: Needs optimization adding a Document reference on the entity to its parent to save this query
         Query storeQuery = Query.query(Criteria.where("id").is(storeId));
         Store store = mongoTemplate.findOne(storeQuery, Store.class);
-        mongoTemplate.save(store);
+        mongoTemplate.save(store);//update store
     }
 
     // @Override

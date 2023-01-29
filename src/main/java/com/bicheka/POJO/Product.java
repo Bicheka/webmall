@@ -1,7 +1,10 @@
 package com.bicheka.POJO;
+import java.util.Date;
+
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.aggregation.DateOperators.DateAdd;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -38,7 +41,9 @@ public class Product {
 
     private String description;
 
-    private DateAdd dateAdd;
+    @DateTimeFormat
+    @CreatedDate
+    private Date dateAdded;
 
     @NotBlank
     @NotEmpty

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.bicheka.POJO.Product;
 import com.bicheka.POJO.Role;
 import com.bicheka.POJO.Store;
 import com.bicheka.POJO.User;
@@ -50,7 +51,13 @@ public class UserServiceImpl implements UserService {
     public void deleteAccount(String email){
         email = email.toLowerCase();
         Query query = Query.query(Criteria.where("userEmail").is(email));
-        mongoTemplate.remove( query, Store.class); //delete asociated stores
+
+        //remove all stores and for each store remove all products
+        mongoTemplate.findAllAndRemove( query, Store.class)
+            .forEach(x ->{ Query productQuery = Query.query(Criteria.where("storeId").is(x.getId()));
+            mongoTemplate.remove(productQuery, Product.class);});
+        
+        //delete asociated stores
         userRepository.deleteByEmail(email);//delete user
     }
 

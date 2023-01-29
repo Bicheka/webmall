@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.bicheka.POJO.Product;
 import com.bicheka.POJO.Role;
 import com.bicheka.POJO.Store;
 import com.bicheka.POJO.User;
@@ -75,6 +76,9 @@ public class StoreServiceImpl implements StoreService{
         User user = mongoTemplate.findOne(userQuery, User.class);
         //by saving the user it gets updated
         mongoTemplate.save(user);
+
+        Query productQuery = Query.query(Criteria.where("storeId").is(id));
+        mongoTemplate.remove(productQuery, Product.class);
 
         if(userService.getUserByEmail(email).getStoreIds().size() == 0){
             userService.updateRole(email, Role.USER);

@@ -8,6 +8,6 @@ public interface ProductService {
     Product saveProduct(Product product);
     Product getProductById(String id);
     List<Product> getAllProducts();
-    void deleteProduct(String id);
+    String deleteProduct(String id, String userEmail);//TODO: need serious optimization
     // void updateProduct(String id, Product updatedProduct);
 }

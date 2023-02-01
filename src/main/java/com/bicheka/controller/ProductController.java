@@ -8,6 +8,7 @@ import com.bicheka.service.ProductService;
 
 import lombok.AllArgsConstructor;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete_product/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable String id){
-        return new ResponseEntity<>("Product deleted", HttpStatus.OK);
+    public ResponseEntity<String> deleteProduct(@PathVariable String id, Principal principal){
+        return new ResponseEntity<>(productService.deleteProduct(id, principal.getName()), HttpStatus.OK);
     }
 }

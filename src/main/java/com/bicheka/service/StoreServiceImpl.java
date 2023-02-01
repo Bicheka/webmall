@@ -61,10 +61,12 @@ public class StoreServiceImpl implements StoreService{
     }
 
     @Override
-    public void deleteStoreById(String id) {
+    public String deleteStoreById(String id, String userEmail) {
         Query storeQuery = Query.query(Criteria.where("id").is(id));
         Store store = mongoTemplate.findOne(storeQuery, Store.class);
-        
+        if(!store.getUserEmail().equals(userEmail)){// if who make the request is not the owner of the store deny the request
+            return "The store with id: " + id + " store is not owned by you";
+        }
         String email = store.getUserEmail();
         
         //delete asociated stores
@@ -83,11 +85,8 @@ public class StoreServiceImpl implements StoreService{
         if(userService.getUserByEmail(email).getStoreIds().size() == 0){
             userService.updateRole(email, Role.USER);
         }
-    }
 
-    @Override
-    public void deleteUserStores(String email) {
-        
+        return "Store deleted";
     }
 
     @Override

@@ -48,6 +48,12 @@ public class User implements UserDetails{
 	@DocumentReference
 	private List<Store> storeIds;
 
+	private List<Product> shoppingCart;
+
+	private List<Product> wishlist;
+
+	private List<Product> buyHistory;
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return List.of(new SimpleGrantedAuthority(role.name()));

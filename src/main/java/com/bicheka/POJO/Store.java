@@ -35,6 +35,8 @@ public class Store{
     @DocumentReference
     private List<Product> products;
 
-    String userEmail;
+    private String userEmail;
+
+    private StoreStatistics statistics;
 
 }

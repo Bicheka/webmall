@@ -32,8 +32,11 @@ public class SecurityConfig {
     
             .csrf().disable()
             .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET, "/product/get_all_products").permitAll()
                 .requestMatchers(HttpMethod.GET, SecurityConstants.GET_STORES).permitAll()
                 .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll() //permit all request at this path
+                .requestMatchers(HttpMethod.DELETE, "/store").hasRole("STORE")
+                .requestMatchers(HttpMethod.PUT, "/store").hasRole("STORE")
                 // .requestMatchers(HttpMethod.DELETE, "/store/**").hasRole("STORE")
                 .anyRequest().authenticated()
             .and()  

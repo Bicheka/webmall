@@ -11,6 +11,6 @@ public interface StoreService {
     List<Store> getUserStores(String email);
     List<Store> getAllStores();
     void deleteStore(String storename);
-    String deleteStoreById(String id, String userEmail);//TODO: need serious optimization
+    String deleteStoreById(String id, String userEmail);//TODO: need optimization
     Store renameStore(String storename, String newName);
 }

@@ -29,11 +29,14 @@ public class User implements UserDetails{
     @Id
 	private String id;
 
-	@NotBlank(message =  "username cannot be blank")
+	@NotBlank(message =  "name cannot be blank")
 	@NonNull
 	private String firstName;
 
-	
+	@NotBlank(message =  "name cannot be blank")
+	@NonNull
+	private String lastName;
+
 	@Indexed(unique = true)
 	@NotBlank(message =  "email cannot be blank")
 	@NonNull
@@ -44,6 +47,8 @@ public class User implements UserDetails{
 	private String password;
 
 	private Role role;
+
+	private Address address;
 
 	@DocumentReference
 	private List<Store> storeIds;

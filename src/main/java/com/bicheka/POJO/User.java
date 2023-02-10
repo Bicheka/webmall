@@ -53,7 +53,8 @@ public class User implements UserDetails{
 	@DocumentReference
 	private List<Store> storeIds;
 
-	private List<String> shoppingCartProductsIds;
+	@DocumentReference
+	private List<Product> shoppingCart;
 
 	private List<Product> wishlist;
 

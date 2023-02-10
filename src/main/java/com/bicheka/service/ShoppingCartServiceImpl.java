@@ -2,12 +2,16 @@ package com.bicheka.service;
 
 import java.util.Optional;
 
+
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.bicheka.POJO.Product;
 import com.bicheka.POJO.User;
 import com.bicheka.exeption.EntityNotFoundException;
-import com.bicheka.repository.ProductRepository;
-import com.bicheka.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -15,20 +19,31 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ShoppingCartServiceImpl implements ShoppingCartService{
 
-    ProductRepository productRepository;
-    UserRepository userRepository;
+    MongoTemplate mongoTemplate;
 
     @Override
     public String addToCart(String id, String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        unwrapUser(user, email).getShoppingCartProductsIds().add(id);
+        Query query = Query.query(Criteria.where("id").is(id));
+        Product product = mongoTemplate.findOne(query, Product.class);
+        mongoTemplate.update(User.class)
+            .matching(Criteria.where("email").is(email))
+            .apply(new Update().push("shoppingCart", product))
+            .first();
         return "product added to shopping cart";
     }
 
     @Override
     public String removeFromCart(String id, String email) {
-       
-        return null;
+
+        Query query = Query.query(Criteria.where("id").is(id));
+        Product product = mongoTemplate.findOne(query, Product.class);
+
+        mongoTemplate.update(User.class)
+        .matching(Criteria.where("email").is(email))
+        .apply(new Update().pull("shoppingCart", product))
+        .first();
+
+        return "item removed from cart";
     }
 
     @Override

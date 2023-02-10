@@ -47,9 +47,17 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     }
 
     @Override
-    public String clearCart() {
-       
-        return null;
+    public String clearCart(String email) {
+
+        Query query = Query.query(Criteria.where("email").is(email));
+        Object[] list = mongoTemplate.findOne(query, User.class).getShoppingCart().toArray();
+
+        mongoTemplate.update(User.class)
+        .matching(Criteria.where("email").is(email))
+        .apply(new Update().pullAll("shoppingCart", list))
+        .first();
+
+        return "all items in the shopping cart have being deleted";
     }
 
     @Override

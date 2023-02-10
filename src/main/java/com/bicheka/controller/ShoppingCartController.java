@@ -31,4 +31,9 @@ public class ShoppingCartController {
     public ResponseEntity<String> removeFromCart(@PathVariable String id, Principal principal){
         return new ResponseEntity<>(shoppingCartService.removeFromCart(id, principal.getName()), HttpStatus.OK);
     }
+
+    @PatchMapping("/clear-cart")
+    public ResponseEntity<String> clearCart(Principal principal){
+        return new ResponseEntity<>(shoppingCartService.clearCart(principal.getName()), HttpStatus.OK);
+    }
 }

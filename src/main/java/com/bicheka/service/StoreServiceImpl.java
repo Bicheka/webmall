@@ -65,7 +65,7 @@ public class StoreServiceImpl implements StoreService{
         Query storeQuery = Query.query(Criteria.where("id").is(id));
         Store store = mongoTemplate.findOne(storeQuery, Store.class);
         if(!store.getUserEmail().equals(userEmail)){// if who make the request is not the owner of the store deny the request
-            return "The store with id: " + id + " store is not owned by you";
+            return "The store with id: " + id + " is not owned by you";
         }
         String email = store.getUserEmail();
         

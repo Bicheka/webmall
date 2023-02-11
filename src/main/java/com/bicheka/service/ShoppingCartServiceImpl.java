@@ -25,7 +25,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     MongoTemplate mongoTemplate;
 
     @Override
-    public void addProductToShoppingCart(String email, String productId, Integer quantity) {
+    public void addProductToShoppingCart(String email, String productId) {
         
         Query query = Query.query(Criteria.where("email").is(email));
         User user = mongoTemplate.findOne(query, User.class);
@@ -34,10 +34,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
             List<CartItem> shoppingCart = user.getShoppingCart();
             if (shoppingCart == null) {
               shoppingCart = new ArrayList<>();
+              user.setShoppingCart(shoppingCart);
+            }
+
+            boolean productFound = false;
+            for (CartItem pq : shoppingCart) {
+                if (pq.getProduct().getId().equals(productId)) {
+                    pq.setQuantity(pq.getQuantity() + 1);
+                    productFound = true;
+                    break;
+                }
+            }
+            if (!productFound) {
+                shoppingCart.add(new CartItem(product, 1));
             }
             
-            shoppingCart.add(new CartItem(product, quantity));
-            user.setShoppingCart(shoppingCart);
+            
             mongoTemplate.save(user);
         } 
     }

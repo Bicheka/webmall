@@ -24,7 +24,7 @@ public class ShoppingCartController {
 
     @PatchMapping("/add-product-to-cart/{id}")
     public ResponseEntity<Void> addProductToCart(@PathVariable String id, Principal principal ){
-        shoppingCartService.addProductToShoppingCart(principal.getName(), id, 1);
+        shoppingCartService.addProductToShoppingCart(principal.getName(), id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

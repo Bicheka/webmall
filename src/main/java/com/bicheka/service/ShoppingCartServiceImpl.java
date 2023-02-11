@@ -78,17 +78,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     }
 
     @Override
-    public String addToCart(String id, String email) {
-        Query query = Query.query(Criteria.where("id").is(id));
-        Product product = mongoTemplate.findOne(query, Product.class);
-        mongoTemplate.update(User.class)
-            .matching(Criteria.where("email").is(email))
-            .apply(new Update().push("shoppingCart", product))
-            .first();
-        return "product added to shopping cart";
-    }
-
-    @Override
     public String removeFromCart(String id, String email) {
 
         Query query = Query.query(Criteria.where("id").is(id));

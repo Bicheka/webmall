@@ -28,11 +28,6 @@ public class ShoppingCartController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping("/add-to-cart/{id}")
-    public ResponseEntity<String> addToCart(@PathVariable String id, Principal principal ){
-        return new ResponseEntity<>(shoppingCartService.addToCart(id, principal.getName()), HttpStatus.OK);
-    }
-
     @PatchMapping("/remove-from-cart/{id}")
     public ResponseEntity<String> removeFromCart(@PathVariable String id, Principal principal){
         return new ResponseEntity<>(shoppingCartService.removeFromCart(id, principal.getName()), HttpStatus.OK);

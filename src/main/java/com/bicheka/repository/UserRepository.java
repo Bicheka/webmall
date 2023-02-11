@@ -10,6 +10,9 @@ public interface UserRepository extends MongoRepository<User, String> {
 	Optional<User> findByUsername(String username);
 
 	Optional<User> findByEmail(String email);
+	
+	@Query(value = "{'email' : ?0}")
+	User getByEmail(String email);
 
 	@Query(value = "{'email' : ?0}", delete = true)
     User deleteByEmail(String email);

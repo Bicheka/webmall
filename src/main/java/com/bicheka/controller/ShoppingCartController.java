@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,5 +38,11 @@ public class ShoppingCartController {
     @PatchMapping("/clear-cart")
     public ResponseEntity<String> clearCart(Principal principal){
         return new ResponseEntity<>(shoppingCartService.clearCart(principal.getName()), HttpStatus.OK);
+    }
+
+    @PutMapping("/update-product-quantity/{id}")
+    public ResponseEntity<Void> updateQuantity(Principal principal, @PathVariable String id, @RequestBody Integer quantity){
+        shoppingCartService.updateProductQuantityInShoppingCart(principal.getName(), id, quantity);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

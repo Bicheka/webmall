@@ -54,26 +54,28 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         } 
     }
 
+    //update the the shopping cart by a given quantity
     @Override
-    public void updateProductQuantityInShoppingCart(String email, String productId, Integer quantity) {
+    public void updateProductQuantityInShoppingCart(String email, String productId, Integer quantityChange) {
         
         Query query = Query.query(Criteria.where("email").is(email));
         User user = mongoTemplate.findOne(query, User.class);
-
-        Product product = mongoTemplate.findById(productId, Product.class);
-        
-        if (user != null && product != null) {
+        if (user != null) {
             List<CartItem> shoppingCart = user.getShoppingCart();
             if (shoppingCart != null) {
-            for (CartItem productQuantity : shoppingCart) {
-                if (productQuantity.getProduct().getId().equals(productId)) {
-                productQuantity.setQuantity(quantity);
+            for (CartItem pq : shoppingCart) {
+                if (pq.getProduct().getId().equals(productId)) {
+                int newQuantity = pq.getQuantity() + quantityChange;
+                if (newQuantity >= 0) {
+                    pq.setQuantity(newQuantity);
+                } else {
+                    pq.setQuantity(0); //if the quantity is less than 0 set it to 0
+                }
                 break;
                 }
             }
-            user.setShoppingCart(shoppingCart);
-            mongoTemplate.save(user);
             }
+            mongoTemplate.save(user);
         }
     }
 

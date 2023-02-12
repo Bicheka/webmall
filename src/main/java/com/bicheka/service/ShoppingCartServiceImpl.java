@@ -84,6 +84,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         return "item updated";
     }
 
+    //remove an item from the cart by id
     @Override
     public String removeFromCart(String id, String email) {
 
@@ -103,6 +104,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         return "item not found in the shopping cart";
     }
 
+    //remove all items from cart
     @Override
     public String clearCart(String email) {
 
@@ -113,6 +115,21 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         return "all items in the shopping cart have being deleted";
     }
 
+    @Override
+    public double calculateTotal(String email) {
+        
+        double total = 0;
+
+        Query query = Query.query(Criteria.where("email").is(email));
+        User user = mongoTemplate.findOne(query, User.class);
+        List<CartItem> shoppingCart = user.getShoppingCart();
+        for(CartItem i : shoppingCart){
+            total = total + (i.getProduct().getPrice() * i.getQuantity());
+        }
+        return total;
+    }
+
+    //it will be able to buy all items in the cart
     @Override
     public String buyCartItems() {
         

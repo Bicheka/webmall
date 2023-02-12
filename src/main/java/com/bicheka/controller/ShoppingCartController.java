@@ -7,6 +7,7 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -43,5 +44,10 @@ public class ShoppingCartController {
     @PutMapping("/update-product-quantity/{id}")
     public ResponseEntity<String> updateQuantity(Principal principal, @PathVariable String id, @RequestBody Integer quantity){
         return new ResponseEntity<>(shoppingCartService.updateProductQuantityInShoppingCart(principal.getName(), id, quantity), HttpStatus.OK);
+    }
+
+    @GetMapping("/get-total")
+    public ResponseEntity<Double> getTotal(Principal principal){
+        return new ResponseEntity<>(shoppingCartService.calculateTotal(principal.getName()), HttpStatus.OK);
     }
 }

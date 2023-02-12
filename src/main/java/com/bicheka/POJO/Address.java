@@ -23,7 +23,7 @@ public class Address {
     @NonNull
     @NotBlank
     @NotEmpty
-    private String City;
+    private String city;
 
     @NonNull
     @NotBlank
@@ -38,5 +38,5 @@ public class Address {
     @NonNull
     @NotBlank
     @NotEmpty
-    private String State;
+    private String state;
 }

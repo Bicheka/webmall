@@ -56,27 +56,35 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 
     //update the the shopping cart by a given quantity
     @Override
-    public void updateProductQuantityInShoppingCart(String email, String productId, Integer quantityChange) {
+    public String updateProductQuantityInShoppingCart(String email, String productId, Integer quantityChange) {
         
+        boolean isOnCart = false;
+
         Query query = Query.query(Criteria.where("email").is(email));
         User user = mongoTemplate.findOne(query, User.class);
         if (user != null) {
             List<CartItem> shoppingCart = user.getShoppingCart();
             if (shoppingCart != null) {
-            for (CartItem pq : shoppingCart) {
-                if (pq.getProduct().getId().equals(productId)) {
-                int newQuantity = pq.getQuantity() + quantityChange;
-                if (newQuantity >= 0) {
-                    pq.setQuantity(newQuantity);
-                } else {
-                    pq.setQuantity(0); //if the quantity is less than 0 set it to 0
+                for (CartItem pq : shoppingCart) {
+                    if (pq.getProduct().getId().equals(productId)) {
+                        isOnCart = true;
+                        int newQuantity = pq.getQuantity() + quantityChange;
+                        if (newQuantity >= 0) {
+                            pq.setQuantity(newQuantity);
+                        } else {
+                            shoppingCart.remove(pq);
+                        }
+                        break;
+                    }
                 }
-                break;
+                if(isOnCart == false){
+                    return "Item not found on cart";
                 }
-            }
             }
             mongoTemplate.save(user);
         }
+
+        return "item updated";
     }
 
     @Override
@@ -96,14 +104,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     public String clearCart(String email) {
 
-        // Query query = Query.query(Criteria.where("email").is(email));
-        // Object[] list = mongoTemplate.findOne(query, User.class).getShoppingCart().toArray();
-
-        // mongoTemplate.update(User.class)
-        // .matching(Criteria.where("email").is(email))
-        // .apply(new Update().pullAll("shoppingCart", list))
-        // .first();
-
+        Query query = Query.query(Criteria.where("email").is(email));
+        User user = mongoTemplate.findOne(query, User.class);
+        user.getShoppingCart().clear();
+        mongoTemplate.save(user);
         return "all items in the shopping cart have being deleted";
     }
 

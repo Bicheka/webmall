@@ -41,8 +41,7 @@ public class ShoppingCartController {
     }
 
     @PutMapping("/update-product-quantity/{id}")
-    public ResponseEntity<Void> updateQuantity(Principal principal, @PathVariable String id, @RequestBody Integer quantity){
-        shoppingCartService.updateProductQuantityInShoppingCart(principal.getName(), id, quantity);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> updateQuantity(Principal principal, @PathVariable String id, @RequestBody Integer quantity){
+        return new ResponseEntity<>(shoppingCartService.updateProductQuantityInShoppingCart(principal.getName(), id, quantity), HttpStatus.OK);
     }
 }

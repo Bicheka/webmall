@@ -1,6 +1,5 @@
 package com.bicheka.service;
 
-import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.bicheka.POJO.CartItem;
 import com.bicheka.POJO.Product;
 import com.bicheka.POJO.User;
-import com.bicheka.exeption.EntityNotFoundException;
 
 import lombok.AllArgsConstructor;
 
@@ -119,11 +117,5 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     public String buyCartItems() {
         
         return "This method is not working yet";
-    }
-
-    static User unwrapUser(Optional<User> entity, String id) {
-        if (entity.isPresent()) return entity.get();
-        else throw new EntityNotFoundException(id, User.class);
-    }
-    
+    }  
 }

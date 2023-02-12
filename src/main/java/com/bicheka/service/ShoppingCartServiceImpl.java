@@ -3,12 +3,11 @@ package com.bicheka.service;
 import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.Iterator;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.bicheka.POJO.CartItem;
@@ -90,15 +89,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     public String removeFromCart(String id, String email) {
 
-        Query query = Query.query(Criteria.where("id").is(id));
-        Product product = mongoTemplate.findOne(query, Product.class);
-
-        mongoTemplate.update(User.class)
-        .matching(Criteria.where("email").is(email))
-        .apply(new Update().pull("shoppingCart", product))
-        .first();
-
-        return "item removed from cart";
+        Query query = Query.query(Criteria.where("email").is(email));
+        User user = mongoTemplate.findOne(query, User.class);
+        List<CartItem> shoppingCart = user.getShoppingCart();
+        
+        Iterator<CartItem> iter = shoppingCart.iterator();
+        while (iter.hasNext()) {
+            CartItem item = iter.next();
+            if (item.getProduct().getId().equals(id)) {
+                iter.remove();
+                mongoTemplate.save(user);
+                return "item removed from cart";
+            }
+        }
+        return "item not found in the shopping cart";
     }
 
     @Override

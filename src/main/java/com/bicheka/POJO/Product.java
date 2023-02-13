@@ -1,9 +1,11 @@
 package com.bicheka.POJO;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.NotBlank;
@@ -49,4 +51,7 @@ public class Product {
     @NotEmpty
     @NotNull
     private String storeId;
+
+    @DocumentReference
+    List<Comment> comments;
 }

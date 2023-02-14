@@ -24,14 +24,11 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
-    // String createComment(String email, Comment comment);
-    // String updateComment(String commentId, String text, String email);
-    // List<Comment> getComments(String productId);
-    // String deleteComment(String id, String email);
+    
     CommentService commentService;
 
     @PostMapping("/create-comment")
-    public ResponseEntity<String> createComment(Principal principal, Comment comment){
+    public ResponseEntity<String> createComment(Principal principal, @RequestBody Comment comment){
         return new ResponseEntity<>(commentService.createComment(principal.getName(), comment), HttpStatus.OK);
     }
 
@@ -41,12 +38,12 @@ public class CommentController {
     }
 
     @GetMapping("/get-comments/{productId}")
-    public ResponseEntity<List<Comment>> getComments(String productId){
+    public ResponseEntity<List<Comment>> getComments(@PathVariable String productId){
         return new ResponseEntity<>(commentService.getComments(productId), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-comment/{commentId}")
-    public ResponseEntity<String> deleteComment(String id, Principal principal){
-        return new ResponseEntity<>(commentService.deleteComment(id, principal.getName()), HttpStatus.OK);
+    public ResponseEntity<String> deleteComment(@PathVariable String commentId, Principal principal){
+        return new ResponseEntity<>(commentService.deleteComment(commentId, principal.getName()), HttpStatus.OK);
     }
 }

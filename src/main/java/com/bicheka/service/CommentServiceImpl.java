@@ -24,7 +24,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public String createComment(String email, Comment comment) {
         comment.setCreatedBy(email);
-        commentRepository.save(comment);
+        mongoTemplate.save(comment);
         return "comment created";
     }
 
@@ -36,6 +36,7 @@ public class CommentServiceImpl implements CommentService{
             LocalDateTime currentDateTime = LocalDateTime.now();
             comment.setLastUpdated(currentDateTime);
             comment.setCommentText(text);
+            mongoTemplate.save(comment);
             return "comment updated";
         }
         else{

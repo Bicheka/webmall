@@ -2,6 +2,7 @@ package com.bicheka.POJO;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,7 +21,10 @@ public class Comment {
     private String commentText;
     //TODO: it could have images too
 
+    @CreatedDate
     private LocalDateTime createdAt;
+    @CreatedDate
+    private LocalDateTime lastUpdated;
 
     private String createdBy; //name of the user that creates the comment
 

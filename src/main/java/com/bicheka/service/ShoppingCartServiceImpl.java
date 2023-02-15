@@ -23,7 +23,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 
     @Override
     public void addProductToShoppingCart(String email, String productId) {
-        
         Query query = Query.query(Criteria.where("email").is(email));
         User user = mongoTemplate.findOne(query, User.class);
         Product product = mongoTemplate.findById(productId, Product.class);

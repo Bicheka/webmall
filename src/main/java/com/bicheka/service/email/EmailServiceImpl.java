@@ -16,7 +16,7 @@ public class EmailServiceImpl implements EmailService{
     @Override
     public void sendEmail(String to, String subject, String text) {
 
-        String confirmationLink = UriComponentsBuilder.fromUriString("localhost:8080/confirm")
+        String confirmationLink = UriComponentsBuilder.fromUriString("http://localhost:8080/confirm_email")
         .queryParam("email", to)
         .build().toUriString();
         text += "\n\nPlease click on the following link to confirm your email address: " + confirmationLink;
@@ -26,6 +26,7 @@ public class EmailServiceImpl implements EmailService{
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
+        
         emailSender.send(message);
         System.out.println("Email sent successfully...");
     }

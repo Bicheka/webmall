@@ -11,6 +11,7 @@ public interface UserService {
     UserDetails getUserDetailsByName(String username);
     User getUserByEmail(String email);
     User saveUser(User user);
+    void confirmEmail(String email);
     void deleteAccount(String email);
     void updateRole(String email, Role role);
 }

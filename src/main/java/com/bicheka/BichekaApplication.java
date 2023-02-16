@@ -12,6 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableMongoAuditing
 public class BichekaApplication {
 
+	
+
 	public static void main(String[] args) {
 		SpringApplication.run(BichekaApplication.class, args);
 	}
@@ -20,5 +22,4 @@ public class BichekaApplication {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
 }

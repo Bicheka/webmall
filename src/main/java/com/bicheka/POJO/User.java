@@ -48,6 +48,8 @@ public class User implements UserDetails{
 
 	private Role role;
 
+	private boolean emailConfirmed;
+
 	private Address address;
 
 	@DocumentReference
@@ -92,5 +94,9 @@ public class User implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public boolean isEmailConfirmed() {
+		return emailConfirmed;
 	}
 }

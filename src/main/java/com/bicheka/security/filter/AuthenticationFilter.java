@@ -32,7 +32,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 
         try {
 
-
             User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
             System.out.println(request.getInputStream());
             

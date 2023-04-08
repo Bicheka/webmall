@@ -9,13 +9,13 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.bicheka.POJO.Product;
 import com.bicheka.POJO.Role;
 import com.bicheka.POJO.Store;
 import com.bicheka.POJO.User;
 import com.bicheka.exeption.EntityNotFoundException;
 import com.bicheka.repository.UserRepository;
+import com.bicheka.service.email.EmailService;
 
 import lombok.AllArgsConstructor;
 @Service
@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
     private MongoTemplate mongoTemplate;
+    private EmailService emailService;
 
     @Override
     public User getUserByName(String username) {
@@ -44,7 +45,21 @@ public class UserServiceImpl implements UserService {
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEmail(user.getEmail().toLowerCase()); // email to lower case
-        return userRepository.save(user);
+        mongoTemplate.save(user);
+        emailService.sendEmail(user.getEmail(), "Confirm your email", "Please confirm your email address");
+        return user;
+    }
+
+    
+
+    @Override
+    public void confirmEmail(String email) {
+        email = email.toLowerCase();
+        mongoTemplate.update(User.class)
+            .matching(Criteria.where("email").is(email))
+            .apply(new Update().set("emailConfirmed", true))
+            .first();
+        System.out.println("Email confirmed");
     }
 
     @Override

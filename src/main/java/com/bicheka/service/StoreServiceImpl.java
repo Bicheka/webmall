@@ -2,17 +2,20 @@ package com.bicheka.service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.bicheka.POJO.Product;
 import com.bicheka.POJO.Role;
 import com.bicheka.POJO.Store;
 import com.bicheka.POJO.User;
+import com.bicheka.exeption.EntityNotFoundException;
 import com.bicheka.repository.StoreRepository;
 
 
@@ -28,9 +31,11 @@ public class StoreServiceImpl implements StoreService{
     private UserService userService;
 
     @Override
-    public Store createStore(Store store, Principal principal) {
+    public HttpStatus createStore(Store store, Principal principal) {
 
         String email = principal.getName();
+
+        boolean storeExists = storeRepository.findStoreByName(store.getStoreName() ) != null;
 
         //if the role of the user is not STORE change it to the role of STORE
         if(Role.STORE != userService.getUserByEmail(email).getRole()){
@@ -40,13 +45,21 @@ public class StoreServiceImpl implements StoreService{
         store.setUserEmail(email);
         storeRepository.insert(store);
         
-        //update the user with id -> "userId" and push a store into its property "storeIds"
-        mongoTemplate.update(User.class)
-            .matching(Criteria.where("email").is(email))
-            .apply(new Update().push("storeIds", store))
-            .first(); //first() makes sure to get only one user, the first one to find
-        
-        return store;
+        if(!storeExists){
+            try {
+                //update the user with id -> "userId" and push a store into its property "storeIds"
+                mongoTemplate.update(User.class)
+                .matching(Criteria.where("email").is(email))
+                .apply(new Update().push("storeIds", store))
+                .first(); //first() makes sure to get only one user, the first one to find
+                return HttpStatus.CREATED;
+            } catch (Exception e) {
+                return HttpStatus.CONFLICT;
+            }
+        }
+        else{
+            return HttpStatus.CONFLICT;
+        }
     }
 
     @Override
@@ -90,8 +103,15 @@ public class StoreServiceImpl implements StoreService{
     }
 
     @Override
-    public Store getStoreByName(String name) {
-        return storeRepository.findStoreByName(name);
+    public Store getStoreById(String storeId) {
+        Optional<Store> store = storeRepository.findById(storeId);
+        return unwrapUser(store, storeId);
+    }
+
+    //unwarps the optional and throws an exception if the store is not present
+    static Store unwrapUser(Optional<Store> store, String id) {
+        if (store.isPresent()) return store.get();
+        else throw new EntityNotFoundException(id, Store.class);
     }
 
     @Override
@@ -101,8 +121,8 @@ public class StoreServiceImpl implements StoreService{
     }
 
     @Override
-    public Store renameStore(String storename, String newName) {
-        Store store = getStoreByName(storename);
+    public Store renameStore(String id, String newName) {
+        Store store = getStoreById(id);
         store.setStoreName(newName);
         return store;
     }

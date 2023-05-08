@@ -45,6 +45,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll() //permit all request at this path
                 .requestMatchers(HttpMethod.DELETE, "/store").hasRole("STORE")
                 .requestMatchers(HttpMethod.PUT, "/store").hasRole("STORE")
+                .requestMatchers(HttpMethod.GET, "/store/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/product/get_product_by_id/**").permitAll()
                 // .requestMatchers(HttpMethod.DELETE, "/store/**").hasRole("STORE")
                 .anyRequest().authenticated()
             .and()  
@@ -60,8 +62,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedOrigins(Arrays.asList(
+            "http://localhost:3000"
+            // ,"http://10.0.0.0/8"                                        
+        ));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

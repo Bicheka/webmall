@@ -6,5 +6,5 @@ public enum Category {
     FORNITURE,
     CARS,
     APLIANCES,
-    CITCHEN
+    KITCHEN
 }

@@ -29,13 +29,14 @@ public class StoreController{
     private StoreService storeService;
 
     @PostMapping("/create_store")
-    public ResponseEntity<Store> createStore(@RequestBody Store store, Principal principal) {
-        return  new ResponseEntity<Store>(storeService.createStore(store, principal), HttpStatus.CREATED);
+    public HttpStatus createStore(@RequestBody Store store, Principal principal) {
+        HttpStatus status = storeService.createStore(store, principal);
+        return status;
     }
 
-    @GetMapping("/get_store/{storename}")
-    public ResponseEntity<Store> getStore(@PathVariable String storename){
-        return new ResponseEntity<>(storeService.getStoreByName(storename), HttpStatus.OK);
+    @GetMapping("/get_store/{storeId}")
+    public ResponseEntity<Store> getStore(@PathVariable String storeId){
+        return new ResponseEntity<>(storeService.getStoreById(storeId), HttpStatus.OK);
     }
 
     @GetMapping("/get_all_stores")

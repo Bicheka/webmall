@@ -35,8 +35,11 @@ public class Store{
     @DocumentReference
     private List<Product> products;
 
+    //private about;
+
     private String userEmail;
 
+    //this property must be updated so only the owner of the store can see it
     private StoreStatistics statistics;
 
 }

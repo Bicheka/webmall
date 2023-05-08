@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ProductController {
     private ProductService productService;
 
-    @PostMapping("/save_product")
+    @PostMapping("/create_product")
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }

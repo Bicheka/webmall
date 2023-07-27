@@ -99,6 +99,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 
         Query query = Query.query(Criteria.where("email").is(email));
         User user = mongoTemplate.findOne(query, User.class);
+
+        if (user == null) {
+            return "user not found";
+        }
+
         List<CartItem> shoppingCart = user.getShoppingCart();
         
         Iterator<CartItem> iter = shoppingCart.iterator();
@@ -119,6 +124,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 
         Query query = Query.query(Criteria.where("email").is(email));
         User user = mongoTemplate.findOne(query, User.class);
+        
+        if (user == null) {
+            return "user not found";
+        }
+
         user.getShoppingCart().clear();
         mongoTemplate.save(user);
         return "all items in the shopping cart have being deleted";
@@ -131,6 +141,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 
         Query query = Query.query(Criteria.where("email").is(email));
         User user = mongoTemplate.findOne(query, User.class);
+
+        if (user == null) {
+            return 0;
+        }
+
         List<CartItem> shoppingCart = user.getShoppingCart();
         for(CartItem i : shoppingCart){
             total = total + (i.getProduct().getPrice() * i.getQuantity());

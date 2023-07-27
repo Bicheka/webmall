@@ -48,11 +48,17 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public String deleteProduct(String id, String userEmail) {
         Query query = Query.query(Criteria.where("id").is(id));
-        String storeId = mongoTemplate.findOne(query, Product.class).getStoreId();
-        
+        Product product = mongoTemplate.findOne(query, Product.class);
+
+        if(product == null) return "Product not found";
+
+        String storeId = product.getStoreId();
+
         // TODO: Needs optimization adding a Document reference on the entity to its parent to save this query
         Query storeQuery = Query.query(Criteria.where("id").is(storeId));
         Store store = mongoTemplate.findOne(storeQuery, Store.class);
+
+        if(store == null) return "Store not found";
 
         if(!store.getUserEmail().equals(userEmail)){
             return "Reuest denied because product with id: "+ id +" is not owned by you";

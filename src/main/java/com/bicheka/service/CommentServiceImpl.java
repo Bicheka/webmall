@@ -32,7 +32,10 @@ public class CommentServiceImpl implements CommentService{
     public String updateComment(String commentId, String text, String email) {
         Query query = Query.query(Criteria.where("id").is(commentId));
         Comment comment = mongoTemplate.findOne(query, Comment.class);
-        if(comment.getCreatedBy().equals(email)){
+        if(comment == null){
+            return "comment not found";
+        }
+        if(comment.getCreatedBy().equals(email)){ //check if the comment belongs to the user
             LocalDateTime currentDateTime = LocalDateTime.now();
             comment.setLastUpdated(currentDateTime);
             comment.setCommentText(text);

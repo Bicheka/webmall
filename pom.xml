@@ -86,6 +86,12 @@
 			<version>1.9.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>s3</artifactId>
+			<version>2.20.112</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

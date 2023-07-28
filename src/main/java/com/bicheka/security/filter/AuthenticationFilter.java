@@ -11,9 +11,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.bicheka.POJO.User;
 import com.bicheka.security.SecurityConstants;
 import com.bicheka.security.manager.CustomAuthenticationManager;
+import com.bicheka.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.FilterChain;

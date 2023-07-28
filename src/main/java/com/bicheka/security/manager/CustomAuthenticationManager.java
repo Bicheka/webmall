@@ -8,10 +8,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-
-import com.bicheka.POJO.User;
-
-import com.bicheka.service.UserService;
+import com.bicheka.user.User;
+import com.bicheka.user.UserService;
 
 import lombok.AllArgsConstructor;
 

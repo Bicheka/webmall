@@ -1,6 +1,6 @@
 package com.bicheka.image;
 
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -62,7 +62,7 @@ public class ImageServiceImpl implements ImageService{
     }
 
     @Override
-    public byte[] getProductImage(String productId) {
+    public List<byte[]> getProductImage(String productId) {
 
         Query productQuery = Query.query(Criteria.where("id").is(productId));
         Product product = mongoTemplate.findOne(productQuery, Product.class);
@@ -75,10 +75,20 @@ public class ImageServiceImpl implements ImageService{
             throw new EntityNotFoundException(productId, Product.class);
         }
         else{
-            return s3Service.getObjectBytes(
-                s3Buckets.getTest(), 
-                "product-images/%s/%s".formatted(productId, product.getImageIds().get(0))
-            );
+            
+            List<String> productImageIds = product.getImageIds();
+            List<byte[]> images = new java.util.ArrayList<>(); //initialize an empty list of byte arrays
+
+            //get all the images of the product with id -> "productId" from s3 bucket and add them to the list of byte arrays "images"
+            for(String productImageId : productImageIds){
+                
+                images.add(s3Service.getObjectBytes(
+                    s3Buckets.getTest(), 
+                    "product-images/%s/%s".formatted(productId, productImageId)
+                ));
+
+            }
+            return images;
         }
     }
 }

@@ -32,7 +32,7 @@ public class ImageController {
 
     //gets product image from s3 bucket
     @GetMapping("/{productId}/get_product_image")
-    public ResponseEntity<byte[]> getProductImage(@PathVariable String productId) {
+    public ResponseEntity<List<byte[]>> getProductImage(@PathVariable String productId) {
         
         return new ResponseEntity<>(imageService.getProductImage(productId), HttpStatus.OK);
     }

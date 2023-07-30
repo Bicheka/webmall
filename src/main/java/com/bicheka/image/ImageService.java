@@ -1,5 +1,7 @@
 package com.bicheka.image;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {
@@ -7,5 +9,5 @@ public interface ImageService {
 
     void uploadProductImage(String productId, MultipartFile file, String userEmail);
 
-    byte[] getProductImage(String productId);
+    List<byte[]> getProductImage(String productId);
 }

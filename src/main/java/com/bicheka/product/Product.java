@@ -54,6 +54,13 @@ public class Product {
     @NotNull
     private String storeId;
 
+    @NotBlank
+    @NotEmpty
+    @NotNull
+    private String ownerEmail;
+
     @DocumentReference
     List<Comment> comments;
+
+    List<String> imageIds; //store the ids of the images in the s3 bucket
 }

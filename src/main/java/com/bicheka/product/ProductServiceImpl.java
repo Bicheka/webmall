@@ -21,7 +21,8 @@ public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
 
     @Override
-    public Product saveProduct(Product product) {
+    public Product saveProduct(Product product, String ownerEmail) {
+        product.setOwnerEmail(ownerEmail);//set the owner of the product
         productRepository.insert(product);
         mongoTemplate.update(Store.class)
             .matching(Criteria.where("id").is(product.getStoreId()))
@@ -80,6 +81,5 @@ public class ProductServiceImpl implements ProductService{
     static Product unwrapProduct(Optional<Product> entity, String id) {
         if (entity.isPresent()) return entity.get();
         else throw new EntityNotFoundException(id, Product.class);
-    }
-    
+    } 
 }

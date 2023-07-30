@@ -50,8 +50,6 @@ public class ImageServiceImpl implements ImageService{
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
-            //TODO": store image to database
         }
         else{
             if(product == null){

@@ -22,21 +22,9 @@ public class BichekaApplication {
 		SpringApplication.run(BichekaApplication.class, args);
 	}
 
-	// @Bean
-	// CommandLineRunner runner(S3Service s3Service, S3Buckets s3Buckets) {
-	// 	return args -> {
-	// 		s3Service.putObject(s3Buckets.getProduct(), "foo", "hello world".getBytes());
-	// 		byte[] object = s3Service.getObjectBytes("bicheka-file-storage-test", "foo");
-
-	// 		System.out.println("Yeii!! "+ new String(object));
-	// 	};
-	// }
-
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-
 
 }

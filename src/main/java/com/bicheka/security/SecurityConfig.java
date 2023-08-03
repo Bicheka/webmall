@@ -42,7 +42,6 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/confirm_email").permitAll()
                 .requestMatchers(HttpMethod.GET, "/product/get_all_products").permitAll()
                 .requestMatchers(HttpMethod.GET, "/image/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/image/**").hasRole("STORE")
                 .requestMatchers(HttpMethod.GET, SecurityConstants.GET_STORES).permitAll()
                 .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll() //permit all request at this path
                 .requestMatchers(HttpMethod.DELETE, "/store").hasRole("STORE")

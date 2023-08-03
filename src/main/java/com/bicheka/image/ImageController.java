@@ -30,11 +30,23 @@ public class ImageController {
         return new ResponseEntity<>("Image uploaded successfully", HttpStatus.OK);
     }
 
-    //gets product image from s3 bucket
+    @GetMapping("/{productId}/get_product_image/{imageId}")
+    public ResponseEntity<String> getProductImage(@PathVariable String productId, @PathVariable String imageId) {
+        
+        return new ResponseEntity<>(imageService.getProductImage(productId, imageId), HttpStatus.OK);
+    }
+
     @GetMapping("/{productId}/get_product_image")
-    public ResponseEntity<List<byte[]>> getProductImage(@PathVariable String productId) {
+    public ResponseEntity<String> getProductImage(@PathVariable String productId) {
         
         return new ResponseEntity<>(imageService.getProductImage(productId), HttpStatus.OK);
+    }
+
+    //gets product image from s3 bucket
+    @GetMapping("/{productId}/get_product_images")
+    public ResponseEntity<List<byte[]>> getProductImages(@PathVariable String productId) {
+        
+        return new ResponseEntity<>(imageService.getProductImages(productId), HttpStatus.OK);
     }
 
 }

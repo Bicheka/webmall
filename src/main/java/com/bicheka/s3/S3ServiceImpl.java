@@ -32,17 +32,18 @@ public class S3ServiceImpl implements S3Service{
     @Override
     public byte[] getObjectBytes(String bucketName, String key) {
         try {
-            GetObjectRequest objectRequest = GetObjectRequest
-                .builder()
+            GetObjectRequest objectRequest = GetObjectRequest.builder()
+                .bucket(bucketName)    
                 .key(key)
-                .bucket(bucketName)
                 .build();
 
             ResponseInputStream<GetObjectResponse> objectBytes = s3.getObject(objectRequest);
             return objectBytes.readAllBytes();
             
             // ResponseBytes<GetObjectResponse> objectBytes = s3.getObjectAsBytes(objectRequest);
+            
             // byte[] data = objectBytes.asByteArray();
+        
             // return data;
 
         } catch (Exception e) {

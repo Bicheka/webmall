@@ -1,6 +1,7 @@
 package com.bicheka.image;
 
 
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,14 +63,52 @@ public class ImageServiceImpl implements ImageService{
     }
 
     @Override
-    public List<byte[]> getProductImage(String productId) {
+    public String getProductImage(String productId, String imageId) {
+
+        if(mongoTemplate.findOne(Query.query(Criteria.where("id").is(productId)), Product.class) == null){
+            throw new EntityNotFoundException(productId, Product.class);
+        }
+        else if(mongoTemplate.findOne(Query.query(Criteria.where("imageIds").is(imageId)), Product.class) == null){
+            throw new EntityNotFoundException(imageId, Product.class);
+        }
+
+        byte[] image = s3Service.getObjectBytes(
+            s3Buckets.getTest(), 
+            "product-images/%s/%s".formatted(productId, imageId)
+        );
+
+        return Base64.getEncoder().encodeToString(image); //encode the image to base64 string
+    }
+
+    @Override
+    public String getProductImage(String productId) {
 
         Query productQuery = Query.query(Criteria.where("id").is(productId));
         Product product = mongoTemplate.findOne(productQuery, Product.class);
 
-        // List<byte[]> images = Arrays.asList();
+        if(product == null){
+            throw new EntityNotFoundException(productId, Product.class);
+        }
 
-        // byte[] image = null;
+        String productImageId = product.getImageIds().get(0);
+
+        if(product.getImageIds().equals(null) || product.getImageIds().isEmpty()){
+            throw new EntityNotFoundException("Image not found");
+        }
+        else{
+            byte[] image = s3Service.getObjectBytes(
+                s3Buckets.getTest(), 
+                "product-images/%s/%s".formatted(productId, productImageId)
+            );
+            return Base64.getEncoder().encodeToString(image); //encode the image to base64 string
+        }
+    }
+
+    @Override
+    public List<byte[]> getProductImages(String productId) {
+
+        Query productQuery = Query.query(Criteria.where("id").is(productId));
+        Product product = mongoTemplate.findOne(productQuery, Product.class);
 
         if(product == null){
             throw new EntityNotFoundException(productId, Product.class);

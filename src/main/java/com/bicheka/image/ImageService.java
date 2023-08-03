@@ -9,5 +9,9 @@ public interface ImageService {
 
     void uploadProductImage(String productId, MultipartFile file, String userEmail);
 
-    List<byte[]> getProductImage(String productId);
+    String getProductImage(String productId, String imageId);
+
+    String getProductImage(String productId);
+
+    List<byte[]> getProductImages(String productId);
 }

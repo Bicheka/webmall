@@ -1,6 +1,9 @@
 package com.bicheka.security.filter;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -52,9 +55,14 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+        Instant expirationInstant = Instant.now().plus(1, ChronoUnit.MONTHS);
+        Date expirationDate = Date.from(expirationInstant);
+
+        System.out.println(expirationDate);
+
         String token = JWT.create()
             .withSubject(authResult.getName())
-            .withExpiresAt(new Date(System.currentTimeMillis()+ SecurityConstants.TOKEN_EXPIRATION))
+            .withExpiresAt(expirationDate)
             .sign(Algorithm.HMAC512(SecurityConstants.SECRET_KEY));
         response.addHeader(SecurityConstants.AUTHORIZATION, SecurityConstants.BEARER + token);
     }

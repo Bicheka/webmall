@@ -5,13 +5,15 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {
-    // void uploadImage(String bucketName, String key, byte[] file);
 
-    void uploadProductImage(String productId, MultipartFile file, String userEmail);
+    //return type Image
+    Image uploadImage(String productId, MultipartFile file, String userEmail);
+    Image getImage(String productId, String imageId);
+    Image getImage(String productId);
+    List<Image> getImages(String productId);
+    Image changeImage(String productId, String imageId, MultipartFile file, String userEmail);
 
-    String getProductImage(String productId, String imageId);
+    void deleteProductImage(String productId, String imageId, String userEmail);
 
-    String getProductImage(String productId);
-
-    List<byte[]> getProductImages(String productId);
+    void deleteAllProductImages(String productId, String userEmail);
 }

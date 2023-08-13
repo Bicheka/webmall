@@ -7,5 +7,7 @@ public interface ProductService {
     Product getProductById(String id);
     List<Product> getAllProducts();
     String deleteProduct(String id, String userEmail);//TODO: needs optimization
-    // void updateProduct(String id, Product updatedProduct);
+    void updateProductPrice(String id, double price, String userEmail);
+    void updateProductName(String id, String name, String userEmail);
+    void updateProductDescription(String id, String description, String userEmail); 
 }

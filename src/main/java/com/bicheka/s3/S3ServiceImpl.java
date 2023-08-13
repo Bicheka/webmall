@@ -50,6 +50,11 @@ public class S3ServiceImpl implements S3Service{
             throw new RuntimeException("Error occurred while downloading file from S3 bucket !!" + e);
         }
     }
+
+    @Override
+    public void deleteObject(String bucketName, String key) {
+        s3.deleteObject(builder -> builder.bucket(bucketName).key(key));
+    }
     
     
     

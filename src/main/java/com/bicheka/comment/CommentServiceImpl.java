@@ -19,10 +19,9 @@ public class CommentServiceImpl implements CommentService{
     MongoTemplate mongoTemplate;
 
     @Override
-    public String createComment(String email, Comment comment) {
+    public Comment createComment(String email, Comment comment) {
         comment.setCreatedBy(email);
-        mongoTemplate.save(comment);
-        return "comment created";
+        return mongoTemplate.save(comment);//this retunrs the comment that was just saved
     }
 
     @Override

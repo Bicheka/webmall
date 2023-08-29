@@ -63,6 +63,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        
+        // TODO: change this to the frontend url
         configuration.setAllowedOrigins(Arrays.asList(
             "http://localhost:3000"
             // ,"http://10.0.0.0/8"                                        

@@ -17,7 +17,7 @@ public class EmailServiceImpl implements EmailService{
     public void sendEmail(String to, String subject, String text) {
 
        
-
+        //TODO: change the url to the url of your frontend, and then the frontend will send a post request to the confirm_email endpoint
         String confirmationLink = UriComponentsBuilder.fromUriString("http://localhost:8080/confirm_email")
         .queryParam("email", to)
         .build().toUriString();

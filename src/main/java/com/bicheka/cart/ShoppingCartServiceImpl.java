@@ -24,8 +24,25 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     public List<CartItem> getShoppingCart(String email) {
         Query query = Query.query(Criteria.where("email").is(email));
         User user = mongoTemplate.findOne(query, User.class);
+
+
         if (user != null) {
-            return user.getShoppingCart(); //TODO: Check if the items on the choping cart still exist on the database
+            
+            List<CartItem> cartItems = user.getShoppingCart();
+
+            Iterator<CartItem> iter = cartItems.iterator();
+            while (iter.hasNext()) {
+                CartItem item = iter.next();
+                if (item.getProduct() == null) {
+                    iter.remove();
+                }
+            }
+
+            user.setShoppingCart(cartItems);
+
+            mongoTemplate.save(user);
+            return user.getShoppingCart();
+            
         }
         return null;
     }

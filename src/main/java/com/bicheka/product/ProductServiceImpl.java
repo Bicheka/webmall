@@ -70,16 +70,74 @@ public class ProductServiceImpl implements ProductService{
         return "Product deleted";
     }
 
-    // @Override
-    // public void updateProduct(String id, Product updatedProduct) {
-    //     mongoTemplate.update(Product.class)
-    //         .matching(Criteria.where("id").is(id))
-    //         .apply(new Update().for)
-    //         .first();
-    // }
-
     static Product unwrapProduct(Optional<Product> entity, String id) {
         if (entity.isPresent()) return entity.get();
         else throw new EntityNotFoundException(id, Product.class);
+    }
+
+    @Override
+    public void updateProductPrice(String id, double price, String userEmail) {
+        if(checkRequestValidity(id, userEmail)){
+           mongoTemplate.update(Product.class)
+            .matching(Criteria.where("id").is(id))
+            .apply(new Update().set("price", price))
+            .first();
+        }
+        else{
+            throw new UnsupportedOperationException("Only the owner of the product can update the price");
+        }
+
+    }
+
+    @Override
+    public void updateProductName(String id, String name, String userEmail) {
+        if(checkRequestValidity(id, userEmail)){
+            mongoTemplate.update(Product.class)
+            .matching(Criteria.where("id").is(id))
+            .apply(new Update().set("name", name))
+            .first();
+        }
+        else{
+            throw new UnsupportedOperationException("Only the owner of the product can update the name");
+        }
+    }
+
+    @Override
+    public void updateProductDescription(String id, String description, String userEmail) {
+       if(checkRequestValidity(id, userEmail)){
+            mongoTemplate.update(Product.class)
+            .matching(Criteria.where("id").is(id))
+            .apply(new Update().set("description", description))
+            .first();
+        }
+        else{
+            throw new UnsupportedOperationException("Only the owner of the product can update the description");
+       }
     } 
+
+    boolean checkIfProductExists(String productId){
+        return mongoTemplate.exists(Query.query(Criteria.where("id").is(productId)), Product.class);
+    }
+
+    boolean checkIfUserIsOwnerOfProduct(String productId, String userEmail){
+        Query query = Query.query(Criteria.where("id").is(productId));
+        Product product = mongoTemplate.findOne(query, Product.class);
+        if(product == null){
+            throw new EntityNotFoundException(productId, Product.class);
+        }
+        else if(!product.getOwnerEmail().equals(userEmail)){
+            return false;
+        }
+        return true;
+    }
+
+    boolean checkRequestValidity(String productId, String userEmail){
+        if(checkIfProductExists(productId) && checkIfUserIsOwnerOfProduct(productId, userEmail)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

@@ -1,0 +1,36 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/bicheka-396702/bicheka', '.']
+
+substitutions:
+  _IMAGE_TAG: latest
+
+images:
+  - 'gcr.io/bicheka-396702/bicheka:${_IMAGE_TAG}'
+
+secrets:
+  - versionName: projects/bicheka-396702/secrets/GOOGLE_CLOUD_RUN_SERVICE_ACCOUNT/versions/latest
+    secretEnv: GOOGLE_CLOUD_RUN_SERVICE_ACCOUNT
+  - versionName: projects/bicheka-396702/secrets/API_KEY/versions/latest
+    secretEnv: API_KEY
+  - versionName: projects/bicheka-396702/secrets/MONGO_ATLAS_PASSWORD/versions/latest
+    secretEnv: MONGO_ATLAS_PASSWORD
+  - versionName: projects/bicheka-396702/secrets/SPRING_MAIL_PASSWORD/versions/latest
+    secretEnv: SPRING_MAIL_PASSWORD
+  - versionName: projects/bicheka-396702/secrets/SPRING_MAIL_USERNAME/versions/latest
+    secretEnv: SPRING_MAIL_USERNAME
+
+options:
+  substitutionOption: ALLOW_LOOSE
+
+deployments:
+  - name: 'bicheka_server'
+    image: 'gcr.io/bicheka-396702/bicheka:${_IMAGE_TAG}'
+    serviceAccount: 'projects/bicheka-396702/serviceAccounts/${GOOGLE_CLOUD_RUN_SERVICE_ACCOUNT}'
+    env:
+      - 'API_KEY=${API_KEY}'
+      - 'MONGO_ATLAS_PASSWORD=${MONGO_ATLAS_PASSWORD}'
+      - 'SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD}'
+      - 'SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME}'
+    traffic:
+      - latestPercent: 100

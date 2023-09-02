@@ -84,7 +84,8 @@ jobs:
       - name: Set up Java with Maven
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: 17
+          distribution: 'adopt-hotspot'
 
       - name: Build Spring Boot JAR
         run: mvn clean package

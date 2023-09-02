@@ -51,7 +51,7 @@ on:
 env:
   PROJECT_ID: bicheka-396702
   GAR_LOCATION: us-east1-docker.pkg.dev/bicheka-396702/bicheka-repo #artifact registry location
-  SERVICE: Bicheka-server
+  SERVICE: bicheka-server
   REGION: us-east1
 
 jobs:

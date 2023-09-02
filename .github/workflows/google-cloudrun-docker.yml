@@ -81,6 +81,14 @@ jobs:
         with:
           credentials_json: ${{ secrets.SERVICE_ACCOUNT_CREDENTIALS }}
 
+      - name: Set up Java with Maven
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Build Spring Boot JAR
+        run: mvn clean package
+
       # BEGIN - Docker auth and build (NOTE: If you already have a container image, these Docker steps can be omitted)
 
       # Authenticate Docker to Google Cloud Artifact Registry

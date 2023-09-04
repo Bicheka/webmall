@@ -66,8 +66,8 @@ public class SecurityConfig {
         
         // TODO: change this to the frontend url
         configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:3000"
-            // ,"http://10.0.0.0/8"                                        
+            "https://bicheka-server-pyqmlkxaxq-ue.a.run.app",
+            "http://localhost:3000"                                      
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*"));

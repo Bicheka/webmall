@@ -51,7 +51,7 @@ on:
 env:
   PROJECT_ID: bicheka-396702 # TODO: update Google Cloud project id
   GAR_LOCATION: us-east1-docker.pkg.dev/bicheka-396702/bicheka-repo # TODO: update Artifact Registry location
-  SERVICE: Bicheka-server # TODO: update Cloud Run service name
+  SERVICE: bicheka-server # TODO: update Cloud Run service name
   REGION: us-east1 # TODO: update Cloud Run service region
 
 jobs:

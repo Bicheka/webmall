@@ -83,7 +83,6 @@ jobs:
 
       - name: Build Spring Boot JAR
         run: mvn clean package
-
         
       # NOTE: Alternative option - authentication via credentials json
       # - name: Google Auth

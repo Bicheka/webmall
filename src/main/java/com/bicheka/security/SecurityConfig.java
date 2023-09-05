@@ -60,21 +60,24 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
 
-        // TODO: change this to the frontend url
-        configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:3000",
-            //allow all origins
-            "*"                                   
-        ));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setExposedHeaders(Arrays.asList("Authorization"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+
+    // @Bean
+    // public CorsConfigurationSource corsConfigurationSource() {
+    //     CorsConfiguration configuration = new CorsConfiguration();
+
+    //     // TODO: change this to the frontend url
+    //     configuration.setAllowedOrigins(Arrays.asList(
+    //         "http://localhost:3000",
+    //         "0.0.0.0/0",
+    //         //allow all origins
+    //         "*"                                   
+    //     ));
+    //     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
+    //     configuration.setAllowedHeaders(Arrays.asList("*"));
+    //     configuration.setExposedHeaders(Arrays.asList("Authorization"));
+    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", configuration);
+    //     return source;
+    // }
 }

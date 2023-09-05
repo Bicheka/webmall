@@ -63,11 +63,12 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        
+
         // TODO: change this to the frontend url
         configuration.setAllowedOrigins(Arrays.asList(
-            "https://bicheka-server-pyqmlkxaxq-ue.a.run.app",
-            "http://localhost:3000"                                      
+            "http://localhost:3000",
+            //allow all origins
+            "*"                                   
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*"));

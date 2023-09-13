@@ -32,12 +32,22 @@ public class BichekaApplication {
 		return new BCryptPasswordEncoder();
 	}
 
+	// @Bean
+	// public WebMvcConfigurer corsConfigurer() {
+	// 	return new WebMvcConfigurer() {
+	// 		@Override
+	// 		public void addCorsMappings(CorsRegistry registry) {
+	// 			registry.addMapping("/**").allowedOrigins("*");
+	// 		}
+	// 	};
+	// }
+
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*");
+				registry.addMapping("/**").allowedOrigins("https://monumental-fairy-c25641.netlify.app", "http://localhost:3000", "*");
 			}
 		};
 	}

@@ -6,12 +6,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.Arrays;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import com.bicheka.security.filter.AuthenticationFilter;
 import com.bicheka.security.filter.JWTAuthorizationFilter;

@@ -33,7 +33,7 @@ public class S3ServiceImpl implements S3Service{
     public byte[] getObjectBytes(String bucketName, String key) {
         try {
             GetObjectRequest objectRequest = GetObjectRequest.builder()
-                .bucket(bucketName)    
+                .bucket(bucketName)
                 .key(key)
                 .build();
 

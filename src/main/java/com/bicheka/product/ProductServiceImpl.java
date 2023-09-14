@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.bicheka.exeption.EntityNotFoundException;
+import com.bicheka.image.ImageService;
 import com.bicheka.store.Store;
 
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 public class ProductServiceImpl implements ProductService{
     private MongoTemplate mongoTemplate;
     private ProductRepository productRepository;
+    private ImageService imageService;
 
     @Override
     public Product saveProduct(Product product, String ownerEmail) {
@@ -64,6 +66,9 @@ public class ProductServiceImpl implements ProductService{
         }
         mongoTemplate.remove(query, Product.class);
         
+        //remove all images of the product from aws s3 when deleting the product
+        imageService.deleteAllProductImages(id, userEmail);
+
         //update store
         mongoTemplate.save(mongoTemplate.findOne(storeQuery, Store.class));
 

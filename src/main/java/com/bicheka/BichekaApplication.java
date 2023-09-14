@@ -37,19 +37,11 @@ public class BichekaApplication {
 	// 	return new WebMvcConfigurer() {
 	// 		@Override
 	// 		public void addCorsMappings(CorsRegistry registry) {
-	// 			registry.addMapping("/**").allowedOrigins("*");
+	// 			registry.addMapping("/**").allowedOrigins("https://monumental-fairy-c25641.netlify.app", "http://localhost:8080", "*", "https://bicheka-frontend-pyqmlkxaxq-ue.a.run.app", "http://localhost:80", "http://localhost:3000")
+	// 				.allowedHeaders("*")
+	// 			;
 	// 		}
 	// 	};
 	// }
-
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("https://monumental-fairy-c25641.netlify.app", "http://localhost:8080", "*", "https://bicheka-frontend-pyqmlkxaxq-ue.a.run.app", "http://localhost:80", "http://localhost:3000");
-			}
-		};
-	}
 
 }

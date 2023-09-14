@@ -1,11 +1,15 @@
 package com.bicheka.security;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 
@@ -58,22 +62,23 @@ public class SecurityConfig {
 
 
 
-    // @Bean
-    // public CorsConfigurationSource corsConfigurationSource() {
-    //     CorsConfiguration configuration = new CorsConfiguration();
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
 
-    //     // TODO: change this to the frontend url
-    //     configuration.setAllowedOrigins(Arrays.asList(
-    //         "http://localhost:3000",
-    //         "0.0.0.0/0",
-    //         //allow all origins
-    //         "*"                                   
-    //     ));
-    //     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
-    //     configuration.setAllowedHeaders(Arrays.asList("*"));
-    //     configuration.setExposedHeaders(Arrays.asList("Authorization"));
-    //     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    //     source.registerCorsConfiguration("/**", configuration);
-    //     return source;
-    // }
+        // TODO: change this to the frontend url
+        configuration.setAllowedOrigins(Arrays.asList(
+            "http://localhost:3000",
+            
+            "0.0.0.0/0",
+            //allow all origins
+            "*"                                   
+        ));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }

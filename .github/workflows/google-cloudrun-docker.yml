@@ -122,13 +122,14 @@ jobs:
           # NOTE: If using a pre-built image, update the image name here
           image: ${{ env.GAR_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
           
-          secrets:
+          secrets: |
             API_KEY=${{ vars.API_KEY }}:latest
             SPRING_MAIL_USERNAME=${{ vars.SPRING_MAIL_USERNAME }}:latest
             MONGO_ATLAS_PASSWORD=${{ vars.MONGO_ATLAS_PASSWORD }}:latest
             SPRING_MAIL_PASSWORD=${{ vars.SPRING_MAIL_PASSWORD }}:latest
             AWS_ACCESS_KEY_ID=${{ vars.AWS_ACCESS_KEY_ID }}:latest
             AWS_SECRET_ACCESS_KEY=${{ vars.AWS_SECRET_ACCESS_KEY }}:latest
+
         
       # If required, use the Cloud Run url output in later steps
       - name: Show Output

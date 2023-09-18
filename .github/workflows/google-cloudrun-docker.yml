@@ -123,7 +123,7 @@ jobs:
           image: ${{ env.GAR_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
           
           secrets: |
-            API_KEY=API_KEY=:latest
+            API_KEY=API_KEY:latest
             SPRING_MAIL_USERNAME=SPRING_MAIL_USERNAME:latest
             MONGO_ATLAS_PASSWORD=MONGO_ATLAS_PASSWORD:latest
             SPRING_MAIL_PASSWORD=SPRING_MAIL_PASSWORD:latest

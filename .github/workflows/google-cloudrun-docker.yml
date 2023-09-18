@@ -124,7 +124,7 @@ jobs:
           
           secrets: |
             API_KEY=${{ vars.API_KEY }}:latest
-            SPRING_MAIL_USERNAME=bichekacoder\@gmail.com:latest
+            SPRING_MAIL_USERNAME=SPRING_MAIL_USERNAME:latest
             MONGO_ATLAS_PASSWORD=${{ vars.MONGO_ATLAS_PASSWORD }}:latest
             SPRING_MAIL_PASSWORD=${{ vars.SPRING_MAIL_PASSWORD }}:latest
             AWS_ACCESS_KEY_ID=${{ vars.AWS_ACCESS_KEY_ID }}:latest

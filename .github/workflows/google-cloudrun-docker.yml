@@ -126,7 +126,7 @@ jobs:
           #   AWS_ACCESS_KEY_ID=${{ vars.AWS_ACCESS_KEY_ID }}
           #   AWS_SECRET_ACCESS_KEY=${{ vars.AWS_SECRET_ACCESS_KEY }}
           
-          secrets: |
+          secrets:
             API_KEY=${{ secrets.API_KEY }}:latest
             SPRING_MAIL_USERNAME=${{ secrets.SPRING_MAIL_USERNAME }}:latest
             MONGO_ATLAS_PASSWORD=${{ secrets.MONGO_ATLAS_PASSWORD }}:latest

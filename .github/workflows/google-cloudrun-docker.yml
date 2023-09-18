@@ -55,6 +55,8 @@ env:
   REGION: us-east1 # TODO: update Cloud Run service region
   
 
+
+
 jobs:
   deploy:
     # Add 'id-token' with the intended permissions for workload identity federation
@@ -119,12 +121,12 @@ jobs:
           # NOTE: If using a pre-built image, update the image name here
           image: ${{ env.GAR_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
           secrets: |
-            API_KEY=${{ vars.API_KEY }}
-            SPRING_MAIL_USERNAME=${{ vars.SPRING_MAIL_USERNAME }}
-            MONGO_ATLAS_PASSWORD=${{ vars.MONGO_ATLAS_PASSWORD }}
-            SPRING_MAIL_PASSWORD=${{ vars.SPRING_MAIL_PASSWORD }}
-            AWS_ACCESS_KEY_ID=${{ vars.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY=${{ vars.AWS_SECRET_ACCESS_KEY }}
+            API_KEY=${{ vars.API_KEY }}:latest
+            SPRING_MAIL_USERNAME=${{ vars.SPRING_MAIL_USERNAME }}:latest
+            MONGO_ATLAS_PASSWORD=${{ vars.MONGO_ATLAS_PASSWORD }}:latest
+            SPRING_MAIL_PASSWORD=${{ vars.SPRING_MAIL_PASSWORD }}:latest
+            AWS_ACCESS_KEY_ID=${{ vars.AWS_ACCESS_KEY_ID }}:latest
+            AWS_SECRET_ACCESS_KEY=${{ vars.AWS_SECRET_ACCESS_KEY }}:latest
 
           
           

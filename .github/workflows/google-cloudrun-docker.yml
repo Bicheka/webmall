@@ -127,12 +127,12 @@ jobs:
           #   AWS_SECRET_ACCESS_KEY=${{ vars.AWS_SECRET_ACCESS_KEY }}
           
           secrets: |
-            API_KEY=${{ secrets.API_KEY }}
-            SPRING_MAIL_USERNAME=${{ secrets.SPRING_MAIL_USERNAME }}
-            MONGO_ATLAS_PASSWORD=${{ secrets.MONGO_ATLAS_PASSWORD }}
-            SPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }}
-            AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            API_KEY:latest=${{ secrets.API_KEY }}
+            SPRING_MAIL_USERNAME:latest=${{ secrets.SPRING_MAIL_USERNAME }}
+            MONGO_ATLAS_PASSWORD:latest=${{ secrets.MONGO_ATLAS_PASSWORD }}
+            SPRING_MAIL_PASSWORD:latest=${{ secrets.SPRING_MAIL_PASSWORD }}
+            AWS_ACCESS_KEY_ID:latest=${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY:latest=${{ secrets.AWS_SECRET_ACCESS_KEY }}
           
       # If required, use the Cloud Run url output in later steps
       - name: Show Output

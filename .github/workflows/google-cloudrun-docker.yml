@@ -120,9 +120,12 @@ jobs:
           region: ${{ env.REGION }}
           # NOTE: If using a pre-built image, update the image name here
           image: ${{ env.GAR_LOCATION }}/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+
+          env_vars: |
+            SPRING_MAIL_USERNAME=${{ vars.SPRING_MAIL_USERNAME }}
+
           secrets: |
             API_KEY=${{ vars.API_KEY }}:latest
-            SPRING_MAIL_USERNAME=${{ vars.SPRING_MAIL_USERNAME }}:latest
             MONGO_ATLAS_PASSWORD=${{ vars.MONGO_ATLAS_PASSWORD }}:latest
             SPRING_MAIL_PASSWORD=${{ vars.SPRING_MAIL_PASSWORD }}:latest
             AWS_ACCESS_KEY_ID=${{ vars.AWS_ACCESS_KEY_ID }}:latest

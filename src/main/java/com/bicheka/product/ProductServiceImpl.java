@@ -69,8 +69,12 @@ public class ProductServiceImpl implements ProductService{
         //remove all images of the product from aws s3 when deleting the product
         imageService.deleteAllProductImages(id, userEmail);
 
+        Store new_store = mongoTemplate.findOne(storeQuery, Store.class);
+        if(new_store ==null){
+            throw new EntityNotFoundException();
+        }
         //update store
-        mongoTemplate.save(mongoTemplate.findOne(storeQuery, Store.class));
+        mongoTemplate.save(new_store);
 
         return "Product deleted";
     }

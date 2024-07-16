@@ -66,13 +66,13 @@ public class StoreServiceImpl implements StoreService{
         return mongoTemplate.find(query, Store.class);
     }
 
-    @Override
-    public void deleteStore(String id) {
-        storeRepository.deleteById(id);  
-    }
+    // @Override
+    // public void deleteStore(String id) {
+    //     storeRepository.deleteById(id);  
+    // }
 
     @Override
-    public String deleteStoreById(String id, String userEmail) {
+    public String deleteStoreById(String id, String userEmail) throws EntityNotFoundException {
         Query storeQuery = Query.query(Criteria.where("id").is(id));
         Store store = mongoTemplate.findOne(storeQuery, Store.class);
 
@@ -90,7 +90,11 @@ public class StoreServiceImpl implements StoreService{
         // TODO: Needs optimization adding a Document reference on the entity to its parent to save this query
         Query userQuery = Query.query(Criteria.where("email").is(email));
         User user = mongoTemplate.findOne(userQuery, User.class);
-        //by saving the user it gets updated
+        
+        if(user == null){
+            throw new EntityNotFoundException();
+        }
+        // by saving the user it gets updated
         mongoTemplate.save(user);
 
         Query productQuery = Query.query(Criteria.where("storeId").is(id));

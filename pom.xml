@@ -8,10 +8,10 @@
 		<version>3.0.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.bicheka</groupId>
-	<artifactId>bicheka</artifactId>
+	<groupId>com.webmall</groupId>
+	<artifactId>webmall</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bicheka</name>
+	<name>webmall</name>
 	<description>mall online</description>
 	<properties>
 		<java.version>17</java.version>

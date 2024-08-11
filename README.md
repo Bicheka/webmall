@@ -9,6 +9,5 @@ way.
 <ul>
   <li>SpringBoot</li>
   <li>MongoDB</li>
-  <li>JWT</li>
 </ul>
 

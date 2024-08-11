@@ -41,11 +41,6 @@ public class StoreController{
         return new ResponseEntity<>(storeService.getAllStores(), HttpStatus.OK);
     }
 
-    @GetMapping("/get_user_stores")
-    public ResponseEntity<List<Store>> getUserStores(Principal principal){
-        return new ResponseEntity<>(storeService.getUserStores(principal.getName()), HttpStatus.OK);
-    }
-
     @DeleteMapping("/delete_store/{id}")
     public ResponseEntity<String> deleteStoreById(@PathVariable String id, Principal principal){
         String email = principal.getName();

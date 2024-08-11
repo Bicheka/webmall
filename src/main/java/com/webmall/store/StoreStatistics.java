@@ -1,9 +1,5 @@
 package com.webmall.store;
 
-import java.util.List;
-
-import com.webmall.product.Product;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +10,6 @@ public class StoreStatistics {
     private double totalRevenue;
     private long AmountOfProductsOnCart;
     private long AmountOfWishedProducts;
-    private List<Product> topFiveProducts;
 
     public StoreStatistics(){
         this.amountOfProductsSold = 0;

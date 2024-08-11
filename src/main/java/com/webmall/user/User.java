@@ -57,7 +57,7 @@ public class User implements UserDetails{
 	private Address address;
 
 	@DocumentReference
-	private List<Store> storeIds;
+	private List<Store> stores;
 
 	private List<CartItem> shoppingCart;
 

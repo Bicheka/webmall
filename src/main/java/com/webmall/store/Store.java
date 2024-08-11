@@ -1,14 +1,8 @@
 package com.webmall.store;
 
-
-import java.util.List;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
-
-import com.webmall.product.Product;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -33,11 +27,6 @@ public class Store{
     @NotEmpty
     @NotNull
     private String storeName;
-
-    @DocumentReference
-    private List<Product> products;
-
-    //private about;
 
     private String userEmail;
 

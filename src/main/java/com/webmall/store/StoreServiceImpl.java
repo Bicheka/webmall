@@ -61,17 +61,6 @@ public class StoreServiceImpl implements StoreService{
     }
 
     @Override
-    public List<Store> getUserStores(String email) {
-        Query query = Query.query(Criteria.where("userEmail").is(email));
-        return mongoTemplate.find(query, Store.class);
-    }
-
-    // @Override
-    // public void deleteStore(String id) {
-    //     storeRepository.deleteById(id);  
-    // }
-
-    @Override
     public String deleteStoreById(String id, String userEmail) throws EntityNotFoundException {
         Query storeQuery = Query.query(Criteria.where("id").is(id));
         Store store = mongoTemplate.findOne(storeQuery, Store.class);
@@ -100,7 +89,7 @@ public class StoreServiceImpl implements StoreService{
         Query productQuery = Query.query(Criteria.where("storeId").is(id));
         mongoTemplate.remove(productQuery, Product.class);
 
-        if(userService.getUserByEmail(email).getStoreIds().size() == 0){
+        if(userService.getUserByEmail(email).getStores().size() == 0){
             userService.updateRole(email, UserRole.USER);
         }
 
@@ -119,6 +108,7 @@ public class StoreServiceImpl implements StoreService{
         else throw new EntityNotFoundException(id, Store.class);
     }
 
+    // TODO: optimize function to return data in chunks as needed
     @Override
     public List<Store> getAllStores() {
         List<Store> stores = storeRepository.findAll(); 

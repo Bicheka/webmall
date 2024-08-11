@@ -89,7 +89,7 @@ public class StoreServiceImpl implements StoreService{
         Query productQuery = Query.query(Criteria.where("storeId").is(id));
         mongoTemplate.remove(productQuery, Product.class);
 
-        if(userService.getUserByEmail(email).getStoreIds().size() == 0){
+        if(userService.getUserByEmail(email).getStores().size() == 0){
             userService.updateRole(email, UserRole.USER);
         }
 

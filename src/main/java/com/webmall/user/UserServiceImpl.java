@@ -65,6 +65,7 @@ public class UserServiceImpl implements UserService {
         email = email.toLowerCase();
         Query query = Query.query(Criteria.where("userEmail").is(email));
 
+        // TODO: optimize
         //remove all stores and for each store remove all products
         mongoTemplate.findAllAndRemove( query, Store.class)
             .forEach(x ->{ Query productQuery = Query.query(Criteria.where("storeId").is(x.getId()));
@@ -87,8 +88,6 @@ public class UserServiceImpl implements UserService {
             .apply(new Update().set("role", role))
             .first();
     }
-
-
 
     static User unwrapUser(Optional<User> entity) {
         if (entity.isPresent()) return entity.get();

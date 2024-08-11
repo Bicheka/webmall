@@ -14,7 +14,6 @@ public class StoreStatistics {
     private double totalRevenue;
     private long AmountOfProductsOnCart;
     private long AmountOfWishedProducts;
-    private List<Product> topFiveProducts;
 
     public StoreStatistics(){
         this.amountOfProductsSold = 0;

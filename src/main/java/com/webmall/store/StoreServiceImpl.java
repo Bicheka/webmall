@@ -66,11 +66,6 @@ public class StoreServiceImpl implements StoreService{
         return mongoTemplate.find(query, Store.class);
     }
 
-    // @Override
-    // public void deleteStore(String id) {
-    //     storeRepository.deleteById(id);  
-    // }
-
     @Override
     public String deleteStoreById(String id, String userEmail) throws EntityNotFoundException {
         Query storeQuery = Query.query(Criteria.where("id").is(id));

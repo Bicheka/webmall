@@ -1,8 +1,13 @@
 package com.webmall.store;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
+
+import com.webmall.product.Product;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -29,6 +34,9 @@ public class Store{
     private String storeName;
 
     private String userEmail;
+
+    @DocumentReference
+    private List<Product> products;
 
     //this property must be updated so only the owner of the store can see it
     private StoreStatistics statistics;

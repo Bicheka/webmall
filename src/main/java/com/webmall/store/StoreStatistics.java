@@ -1,9 +1,5 @@
 package com.webmall.store;
 
-import java.util.List;
-
-import com.webmall.product.Product;
-
 import lombok.Getter;
 import lombok.Setter;
 

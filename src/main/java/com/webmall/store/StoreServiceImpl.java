@@ -1,6 +1,7 @@
 package com.webmall.store;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,6 +114,14 @@ public class StoreServiceImpl implements StoreService{
     public List<Store> getAllStores() {
         List<Store> stores = storeRepository.findAll(); 
         return  stores;
+    }
+
+    @Override
+    public List<Product> getStoreProducts(String store_id){
+        List<Product> products = new ArrayList<>();
+        products = mongoTemplate.findById(store_id, Store.class).getProducts();
+
+        return products;
     }
 
     @Override

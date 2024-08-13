@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.webmall.product.Product;
+
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +41,11 @@ public class StoreController{
     @GetMapping("/get_all_stores")
     public ResponseEntity<List<Store>> getAlStores(){
         return new ResponseEntity<>(storeService.getAllStores(), HttpStatus.OK);
+    }
+
+    @GetMapping("/get_store_products/{store_id}")
+    public ResponseEntity<List<Product>> get_store_products(@PathVariable String store_id) {
+        return new ResponseEntity<>(storeService.getStoreProducts(store_id), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete_store/{id}")

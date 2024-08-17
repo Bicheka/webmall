@@ -3,5 +3,5 @@ package com.webmall.search;
 import java.util.List;
 
 public interface SearchService {
-    List<Object> searchByName(String object_name);
+    List<Object> searchAllByName(String object_name);
 }
